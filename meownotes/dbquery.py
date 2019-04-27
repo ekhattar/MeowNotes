@@ -8,7 +8,7 @@ from utils import *
 
 DEBUG = True
 
-###### DB config
+############ DB config ############
 
 ROOT = os.path.dirname(os.path.realpath(__file__))
 MEOWNOTES_DB = os.path.join(ROOT, "meownotes.db")
@@ -25,45 +25,260 @@ UPDATE_CONDITIONAL = "UPDATE TABLE SET PARAMETERS WHERE CONDITIONS" # e.g., UPDA
 
 """
 Forms the proper query using the given template and replacement values
-Expected form of parameters is:
+Expected form of query_input_items is:
 [{"val": "", "cols": [], "type": None, "condition": False}]
+Example use:
+prepare_query("GET_CONDITIONAL", "users", [{"val": "kroshka", "cols": ["username"], "type": "exact", "condition": True}, 
+                                           {"val": 1, "cols": ["uid"], "type": "exact", "condition": True}])
 """
-def prepare_query(template, table, parameters = [], search = False):
+def prepare_query(template, table, query_input_items = [], search = False):
     # get the desired SQl string template
     query = eval(template)
     # replace with the desired table
     query = query.replace("TABLE", table)
-    # parse the list of parameters to extract columns and values
+    # parse the inputs to extract columns and values
     columns = []
     values = []
+    # parameters are combos of columns and values that are not conditions
+    parameters = []
+    # conditions are conditions that must be fulfilled, possible types (affect string form): exact, multi, contains
     conditions = []
-    for parameter in parameters:
+    for item in query_input_items:
         # reformat the value if needed
-        value = format_value_for_db(parameter["val"], parameter["cols"], parameter["type"])
+        value = format_value_for_db(item["val"], item["cols"], item["type"])
         # add to the list of columns and values
         # if the cols and values are not conditions but data
-        if not parameter["condition"]:
+        if item["condition"] is False:
             values.append(value)
-            columns.append(parameter["cols"][0])
-        # handle conditions - possible types: exact, multi, contains
-        elif "CONDITIONS" in query and parameter["condition"]:
-            if parameter["type"] is "multi":
-                conditions.append(value + " in " + "(" + ",".join(parameter["cols"]) + ")")
-            elif parameter["type"] is "contains":
-                conditions.append("(" + ",".join(parameter["cols"]) + ") LIKE " + value)
+            columns.append(item["cols"][0])
+            parameters.append(item["cols"][0] + "=" + value)
+        # handle conditions
+        elif "CONDITIONS" in query and item["condition"] is True:
+            if item["type"] is "multi":
+                conditions.append(value + " in " + "(" + ",".join(item["cols"]) + ")")
+            elif item["type"] is "contains":
+                conditions.append("(" + ",".join(item["cols"]) + ") LIKE " + value)
             else:
-                conditions.append(parameter["cols"][0] + "=" + value)
+                conditions.append(item["cols"][0] + "=" + value)
     if "CONDITIONS" in query:
         query = query.replace("CONDITIONS", " AND ".join(conditions))
     if "COLS" in query and "VALS" in query:
         query = query.replace("COLS", ", ".join(columns))
         query = query.replace("VALS", ", ".join(values))
+    if "PARAMETERS" in query:
+        query = query.replace("PARAMETERS", ", ".join(parameters))
     if DEBUG:
         print(query)
     return query
 
-###### Functions to interact with the MeowNotes SQLite database ######
-prepare_query("GET_ALL", "users")
-prepare_query("GET_CONDITIONAL", "users", [{"val": "kroshka", "cols": ["username"], "type": "exact", "condition": True}, {"val": 1, "cols": ["uid"], "type": "exact", "condition": True}])
-prepare_query("INSERT", "users", [{"val": "kroshka", "cols": ["username"], "type": "exact", "condition": False}, {"val": 1, "cols": ["uid"], "type": "exact", "condition": False}])
-prepare_query("UPDATE_CONDITIONAL", "users", [{"val": "kroshka", "cols": ["username"], "type": "exact", "condition": False}, {"val": 1, "cols": ["uid"], "type": "exact", "condition": True}])
+############ Functions to interact with the MeowNotes SQLite database ############
+
+def execute_select(query):
+    conn = sqlite3.connect(MEOWNOTES_DB)
+    cursor = conn.cursor()
+    cursor.execute(query)
+    result = cursor.fetchall()
+    conn.close()
+    return result
+
+def execute_and_commit(query):
+    conn = sqlite3.connect(MEOWNOTES_DB)
+    cursor = conn.cursor()
+    cursor.execute(query)
+    conn.commit()
+    conn.close()
+
+############ MeowNotes-specific functions for DB interaction ############
+
+"""
+Retrieve all entries from a given table
+if UID is given, will limit to that user
+"""
+def get_all(table, uid = None):
+    if uid is None:
+        query = prepare_query("GET_ALL", table)
+        results = execute_select(query)
+    else:
+        query_input_items = [{"val": uid, "cols": ["uid"], "type": "exact", "condition": True}]
+        query = prepare_query("GET_CONDITIONAL", table, query_input_items)
+        results = execute_select(query)
+    return results
+
+"""
+Deletes all entries from a given table
+if UID is given, will limit to that user
+"""
+def delete_all(table, uid = None):
+    if uid is None:
+        query = prepare_query("DELETE_ALL", table)
+    else:
+        query_input_items = [{"val": uid, "cols": ["uid"], "type": "exact", "condition": True}]
+        query = prepare_query("DELETE_CONDITIONAL", table, query_input_items)
+    try:
+        execute_and_commit(query)
+    except Exception as e:
+        msg = "Notes were unable to be deleted! Error: %s" + str(e)
+    if DEBUG:
+        print(msg)
+    return msg
+
+# USER-specific functions
+
+def get_user_by_name(username):
+    query_input_items = [{"val": username, "cols": ["username"], "type": "exact", "condition": True}]
+    query = prepare_query("GET_CONDITIONAL", "users", query_input_items)
+    results = execute_select(query)
+    return results
+
+def get_user_by_id(uid):
+    query_input_items = [{"val": uid, "cols": ["uid"], "type": "exact", "condition": True}]
+    query = prepare_query("GET_CONDITIONAL", "users", query_input_items)
+    results = execute_select(query)
+    return results
+
+def delete_user_by_id(uid):
+    query_input_items = [{"val": uid, "cols": ["uid"], "type": "exact", "condition": True}]
+    query = prepare_query("DELETE_CONDITIONAL", "users", query_input_items)
+    try:
+        execute_and_commit(query)
+        msg = "User with id '%s' was deleted." % str(uid)
+    except Exception as e:
+        msg = "User was unable to be deleted! Error: %s" + str(e)
+    if DEBUG:
+        print(msg)
+    return msg
+
+"""
+Create a new user if that username is not taken
+Example use: create_user("kroshka", "love")
+"""
+def create_user(username, password):
+    # make username lowercase
+    username = username.lower()
+    # prepare the query
+    query_input_items = [{"val": username, "cols": ["username"], "type": "exact", "condition": False},
+        {"val": password, "cols": ["password"], "type": "exact", "condition": False}]
+    query = prepare_query("INSERT", "users", query_input_items)
+    # if the user already exists, return a warning message
+    try:
+        execute_and_commit(query)
+        msg = "Welcome! An account for %s was created!" % username
+    except sqlite3.IntegrityError:
+        msg = "Oh no! That username already exists! Please choose another one (or enter the correct password)."
+    if DEBUG:
+        print(msg)
+    return msg
+
+# NOTE-specific functions
+
+def get_notes_by_user(uid):
+    query_input_items = [{"val": uid, "cols": ["uid"], "type": "exact", "condition": True}]
+    query = prepare_query("GET_CONDITIONAL", "notes", query_input_items)
+    results = execute_select(query)
+    return results
+
+def get_note_by_id(uid, note_id):
+    query_input_items = [{"val": uid, "cols": ["uid"], "type": "exact", "condition": True},
+        {"val": note_id, "cols": ["id"], "type": "exact", "condition": True}]
+    query = prepare_query("GET_CONDITIONAL", "notes", query_input_items)
+    results = execute_select(query)
+    return results
+
+def delete_note_by_id(uid, note_id):
+    query_input_items = [{"val": uid, "cols": ["uid"], "type": "exact", "condition": True},
+        {"val": note_id, "cols": ["id"], "type": "exact", "condition": True}]
+    query = prepare_query("DELETE_CONDITIONAL", "notes", query_input_items)
+    try:
+        execute_and_commit(query)
+        msg = "Note with id '%s' was deleted." % str(note_id)
+    except Exception as e:
+        msg = "Note was unable to be deleted! Error: %s" + str(e)
+    if DEBUG:
+        print(msg)
+    return msg
+
+"""
+Create a new note given a title, tags, and content
+Example use: create_note(1, "Test Title", "uni,se", "Content of the note about uni")
+"""
+def create_note(uid, title, tags, content):
+    timestamp = datetime.datetime.now().isoformat()
+    # check if the tags are an array, if yes make them a comma-separated string
+    tags = fix_tags(tags)
+    query_input_items = []
+    inputs = [(uid, ["uid"]), (timestamp, ["date_created"]), (title, ["title"]), (tags, ["tags"]), (content, ["content"])]
+    for input in inputs:
+        query_input_items.append(create_input_obj(input[0], input[1]))
+    query = prepare_query("INSERT", "notes", query_input_items)
+    # try to insert
+    try:
+        execute_and_commit(query)
+        msg = "Note with title '%s' was created." % title
+    except Exception as e:
+        msg = "Note was unable to be created! Error: %s" + str(e)
+    if DEBUG:
+        print(msg)
+    return msg
+
+"""
+Update an existing note by the uid and note id
+Example use: update_note(1,1, "New note title", "", "This is a note with content")
+"""
+def update_note(uid, note_id, title, tags, content):
+    # check if the tags are an array, if yes make them a comma-separated string
+    tags = fix_tags(tags)
+    query_input_items = []
+    inputs = [(uid, ["uid"], "exact", True), (note_id, ["id"], "exact", True), (title, ["title"], None, False), (tags, ["tags"], None, False), (content, ["content"], None, False)]
+    for input in inputs:
+        query_input_items.append(create_input_obj(input[0], input[1], input[2], input[3]))
+    query = prepare_query("UPDATE_CONDITIONAL", "notes", query_input_items)
+    # try to modify
+    try:
+        execute_and_commit(query)
+        msg = "Note with title '%s' was modified." % title
+    except Exception as e:
+        msg = "Note was unable to be modified! Error: %s" + str(e)
+    if DEBUG:
+        print(msg)
+    return msg
+
+############ Functions to parse db results and return as objects ############
+
+# Takes a single user row DB result and puts it into a parsable form
+def parse_user(db_result):
+    result = {
+        "uid": db_result[0],
+        "username": db_result[1],
+        "password": db_result[2]
+    }
+    return result
+
+def parse_note(db_note):
+    # include a datetime that can be output directly in the ui
+    real_date = dateutil.parser.parse(db_note[2])
+    result = {
+        "note_id": db_note[0],
+        "uid": db_note[1],
+        "date_created": db_note[2],
+        "ui_date": real_date.strftime('%b %d, %H:%m'),
+        "title": db_note[3],
+        "tags": db_note[4].split(","),
+        "content": db_note[5],
+    }
+    return result
+
+# Takes a list of DB note results and puts them into a parsable list of objects
+def process_note_results(db_notes):
+    parsed_notes = []
+    # Make a list of note objects
+    for db_note in db_notes:
+        parsed_notes.append(parse_note(db_note))
+    # Sort the list by date
+    parsed_notes.sort(key=operator.itemgetter('date_created'))
+    return parsed_notes
+
+# delete_user_by_id(1)
+# print(get_all("users"))
+# print(get_user_by_id("1"))
+# print(get_notes_by_user("1"))
+# print(get_user_by_name("kroshka"))
