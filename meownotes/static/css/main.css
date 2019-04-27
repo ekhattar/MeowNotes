@@ -1,0 +1,75 @@
+/* -------------- overall -------------- */
+body {
+    font-family: "Montserrat", sans-serif;
+    font-size: 14px;
+}
+
+a {
+    text-decoration: none !important;
+}
+
+/* main MeowNotes colors */
+:root {
+    --meownotes-blue: #30D1E8;
+    --meownotes-light: #FFFFFF;
+    --meownotes-yellow: #FFB20F;
+    --meownotes-red: #EA526F;
+} 
+
+/* -------------- quick override utils -------------- */
+
+.mt-1 {
+    margin-top: 1rem !important;
+}
+
+/* -------------- navbar area styling -------------- */
+
+.navbar.navbar-dark.bg-dark,
+.navbar .navbar-brand {
+    background-color: var(--meownotes-light) !important;
+    color: var(--meownotes-blue) !important;
+}
+
+/* -------------- form inputs styling -------------- */
+
+.meownotes-input {
+    border-radius: 25px;
+    border: 1px solid var(--meownotes-blue);
+    line-height: 1.2;
+  }
+
+/* -------------- buttons styling -------------- */
+
+/* button style 1: white bg, blue border, blue content */
+.meownotes-button {
+    line-height: 1.2;
+    font-size: 1.25rem;
+    text-align: center;
+    padding: .375rem .75rem;
+    border-radius: 25px;
+    background-color: var(--meownotes-light);
+    color: var(--meownotes-blue);
+    border: 1px solid var(--meownotes-blue);
+}
+
+.meownotes-link {
+    padding: .375rem .75rem;
+    width: 100%;
+    margin: auto;
+    display: inline-table;
+}
+
+.meownotes-link>span, .meownotes-link>span>a {
+    color: var(--meownotes-blue);
+}
+
+/* button style 1: hover effect - blue bg, white border, white content */
+.meownotes-button:hover, .meownotes-link:hover {
+    background-color: var(--meownotes-blue);
+    color: var(--meownotes-light);
+    border: 1px solid var(--meownotes-light);
+}
+
+.meownotes-link:hover>span>a {
+    color: var(--meownotes-light);
+}

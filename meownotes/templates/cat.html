@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+{% extends "meownotes.html" %}
+
+<head>
+  <meta charset="utf-8">
+  <title>MeowNotes</title>
+  {% block head %}
+  {{ super() }}
+  {% endblock %}
+</head>
+
+<body>
+  {% block content %}
+  <div class="content main">
+    <div class="row">
+      <div class="col"></div>
+      <div class="col-2 my-auto text-center">
+        <div class="meownotes-button meownotes-link my-auto">
+          <span class="align-middle">
+            <a href="/">return</a>
+          </span>
+        </div>
+      </div>
+      <div class="col"></div>
+    </div>
+    <div class="row align-items-center mt-1">
+      <div class="col text-center">
+        <img src="{{ cat }}">
+      </div>
+    </div>
+  </div>
+  {% endblock %}
+</body>
+
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+{% extends "meownotes.html" %}
+
+<head>
+  <meta charset="utf-8">
+  <title>MeowNotes</title>
+  {% block head %}
+  {{ super() }}
+  {% endblock %}
+</head>
+
+<body>
+  {% block content %}
+  <div class="content main">
+    <div class="row h-100">
+      <div class="col">
+      </div>
+      <div class="col-3 my-auto text-center">
+        <div class="signup-login my-auto">
+          <h1>welcome!</h1>
+          <form class="container" method="POST" action="/login">
+            <h1 class="h3 mb-3 font-weight-normal">create a user or login with an existing one.</h1>
+            <label for="username" class="sr-only">username</label>
+            <input type="text" id="username" name="username" class="form-control meownotes-input"
+              placeholder="username" autofocus="" required="">
+            <label for="password" class="sr-only">password</label>
+            <input type="password" id="password" name="password" class="form-control meownotes-input mt-1"
+              placeholder="password" required="">
+            <button class="meownotes-button mt-1 btn btn-lg btn-primary btn-block" type="submit">go</button>
+          </form>
+          {{ msg }}
+        </div>
+      </div>
+      <div class="col">
+      </div>
+    </div>
+  </div>
+  {% endblock %}
+</body>
+
+</html>
