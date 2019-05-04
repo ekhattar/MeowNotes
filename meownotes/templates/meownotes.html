@@ -27,6 +27,16 @@
                 <a href="{{ url_for('cat') }}"><i class="fas fa-cat"></i></a>
             </span>
         </div>
+        <div class="meownotes-button meownotes-link"
+        style="width:8rem;line-height:1.2;margin-left:1rem;margin-right:1rem;">
+        <span class="align-middle">
+            {% if menu_item == 'logout' %}
+            <a href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt"></i> {{menu_item}}</a>
+            {% else %}
+            <a href="{{ url_for('landing') }}"><i class="fas fa-sign-in-alt"></i> {{menu_item}}</a>
+            {% endif %}
+        </span>
+    </div>
     </nav>
     {% block content %}
     {% endblock %}

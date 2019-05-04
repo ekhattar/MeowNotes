@@ -276,9 +276,3 @@ def process_note_results(db_notes):
     # Sort the list by date
     parsed_notes.sort(key=operator.itemgetter('date_created'))
     return parsed_notes
-
-# delete_user_by_id(1)
-# print(get_all("users"))
-# print(get_user_by_id("1"))
-# print(get_notes_by_user("1"))
-# print(get_user_by_name("kroshka"))

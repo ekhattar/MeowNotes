@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+{% extends "meownotes.html" %}
+
+<head>
+  <meta charset="utf-8">
+  <title>MeowNotes</title>
+  {% block head %}
+  {{ super() }}
+  {% endblock %}
+</head>
+
+<body>
+  {% block content %}
+  <div class="content main">
+    <div class="row">
+      <div class="col my-auto text-center">
+        <div class="my-auto">
+          <h1>dashboard</h1>
+          {{msg}}
+        </div>
+      </div>
+    </div>
+    <div class="row dash-notes-row align-items-center">
+      <div class="col-4 text-center dash-notes-col my-auto">
+        <div class="dashboard-note-prompt card">
+          <div class="card-contents my-auto">
+            <div class="row">
+              <div class="col">
+                <div class="meownotes-button-link my-auto meownotes-go-accent">
+                  <span class="align-middle">
+                    <a href="{{ url_for('landing') }}">
+                      <i class="fas fa-plus-circle"></i> create
+                    </a>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% for note in data %}
+      <div class="col-4 text-center dash-notes-col my-auto">
+        <div class="dashboard-note card">
+          <div class="card-contents my-auto">
+            <div class="row">
+              <div class="col">
+                <h1>{{ note['title'] }}</h1>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <h5>date created: {{ note['ui_date'] }}</h5>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <p>tags: {{ note['tags'] }}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-6">
+                <div class="meownotes-button-inverse-link my-auto">
+                  <span class="align-middle">
+                    <a href="{{ url_for('landing', id=note['note_id']) }}"><i class="far fa-eye"></i> view</a>
+                  </span>
+                </div>
+              </div>
+              <div class="col-6">
+                <form method="POST" action="/delete">
+                  <input type="hidden" id="note_id" name="note_id" value="{{ note['note_id'] }}">
+                  <button class="meownotes-button-inverse btn btn-med btn-primary btn-block meownotes-bg-warning"
+                    type="submit"><i class="fas fa-trash"></i> delete</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% endblock %}
+</body>
+
+</html>

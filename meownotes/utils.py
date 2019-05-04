@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import random
 
 ###### Generic utilities
 
@@ -31,3 +32,11 @@ def fix_tags(tags):
     if isinstance(tags, list):
         tags = ",".join(tags)
     return tags
+
+"""
+Creates a somewhat random welcome message for the user to be displayed
+"""
+def create_welcome_message(username):
+    general_greetings_list = ["hello", "hi", "welcome"]
+    secondary_statement_list = ["hope you're having a great day!", "miao miao miao (that's cat for have a good day)!", "enjoy!", "good luck!", "happy writing!"]
+    return random.choice(general_greetings_list) + " " + username.capitalize() + "! " + random.choice(secondary_statement_list)
