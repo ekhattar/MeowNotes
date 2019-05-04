@@ -27,7 +27,7 @@
           <div class="card-contents my-auto">
             <div class="row">
               <div class="col">
-                <div class="meownotes-button-link my-auto meownotes-go-accent">
+                <div class="meownotes-button meownotes-link my-auto meownotes-go-accent">
                   <span class="align-middle">
                     <a href="{{ url_for('landing') }}">
                       <i class="fas fa-plus-circle"></i> create
@@ -60,7 +60,7 @@
             </div>
             <div class="row">
               <div class="col-6">
-                <div class="meownotes-button-inverse-link my-auto">
+                <div class="meownotes-button meownotes-link my-auto">
                   <span class="align-middle">
                     <a href="{{ url_for('landing', id=note['note_id']) }}"><i class="far fa-eye"></i> view</a>
                   </span>
@@ -69,7 +69,7 @@
               <div class="col-6">
                 <form method="POST" action="/delete">
                   <input type="hidden" id="note_id" name="note_id" value="{{ note['note_id'] }}">
-                  <button class="meownotes-button-inverse btn btn-med btn-primary btn-block meownotes-bg-warning"
+                  <button class="meownotes-button meownotes-link btn btn-med btn-primary btn-block meownotes-bg-warning"
                     type="submit"><i class="fas fa-trash"></i> delete</button>
                 </form>
               </div>

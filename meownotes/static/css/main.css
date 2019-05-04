@@ -8,19 +8,31 @@ a {
     text-decoration: none !important;
 }
 
+h1 {
+    font-weight: 500;
+}
+
 /* main MeowNotes colors */
 :root {
     --meownotes-blue: #30D1E8;
     --meownotes-light: #FFFFFF;
     --meownotes-yellow: #FFB20F;
     --meownotes-red: #EA526F;
-} 
+}
 
 /* -------------- quick override utils -------------- */
 
 .mt-1 {
     margin-top: 1rem !important;
 }
+
+.meownotes-bg-warning:hover {
+    background-color: #EA526F !important;
+  }
+  
+  .meownotes-go-accent:hover {
+    background-color: #FFB20F !important;
+  }
 
 /* -------------- navbar area styling -------------- */
 
@@ -30,13 +42,21 @@ a {
     color: var(--meownotes-blue) !important;
 }
 
+.app-title {
+    font-weight: 300;
+}
+
 /* -------------- form inputs styling -------------- */
 
 .meownotes-input {
     border-radius: 25px;
     border: 1px solid var(--meownotes-blue);
     line-height: 1.2;
-  }
+}
+
+.form-control:focus {
+    border-color: var(--meownotes-blue) !important;
+}
 
 /* -------------- buttons styling -------------- */
 
@@ -59,12 +79,14 @@ a {
     display: inline-table;
 }
 
-.meownotes-link>span, .meownotes-link>span>a {
+.meownotes-link>span,
+.meownotes-link>span>a {
     color: var(--meownotes-blue);
 }
 
 /* button style 1: hover effect - blue bg, white border, white content */
-.meownotes-button:hover, .meownotes-link:hover {
+.meownotes-button:hover,
+.meownotes-link:hover {
     background-color: var(--meownotes-blue);
     color: var(--meownotes-light);
     border: 1px solid var(--meownotes-light);
@@ -72,4 +94,44 @@ a {
 
 .meownotes-link:hover>span>a {
     color: var(--meownotes-light);
+}
+
+/* -------------- content area styling -------------- */
+
+.main {
+    padding: 60px;
+    height: calc(100vh - 56px);
+}
+
+.dash-notes-row {
+    height: 100%;
+}
+
+.dash-notes-col {
+    padding: 1rem;
+    margin-top: 1rem !important;
+}
+
+.dash-notes-col {
+    height: 325px;
+}
+
+.dashboard-note-prompt,
+.dashboard-note {
+    height: 300px;
+    border-radius: 25px;
+    padding-left: 25px;
+    padding-right: 25px;
+}
+
+.dashboard-note-prompt {
+    background-color: #ffffff;
+    border: 1px dashed #30D1E8;
+    color: #30D1E8;
+}
+
+.dashboard-note {
+    background-color: #30D1E8;
+    border: 1px solid #30D1E8;
+    color: #ffffff;
 }
