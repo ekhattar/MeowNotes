@@ -52,14 +52,14 @@ def login():
 def dashboard():
     if session.get("username") is not None:
         session_user = session.get("username")
-        # create the welcome message
-        msg = create_welcome_message(session_user)
-        # get the notes associated with the user
         db_res = get_user_by_name(session_user)
         db_user = parse_user(db_res[0])
         uid = db_user["uid"]
+        # get the notes associated with the user
         db_user_results = get_notes_by_user(uid)
         note_data = process_note_results(db_user_results)
+        # create the welcome message
+        msg = create_welcome_message(session_user)
         return render_template("dashboard.html", msg=msg, menu_item="logout", data=note_data)
     else:
         return redirect("/")
@@ -69,6 +69,43 @@ def dashboard():
 def logout():
     session.pop("username", None)
     return redirect("/")
+
+# Shows a note based on its id
+@app.route("/view")
+def view():
+    if session.get("username") is not None:
+        session_user = session.get("username")
+        db_res = get_user_by_name(session_user)
+        db_user = parse_user(db_res[0])
+        uid = db_user["uid"]
+        # get the note id from the param
+        requested_note_id = request.args.get("id")
+        # retrieve note from the database
+        db_note_results = get_note_by_id(uid, requested_note_id)
+        note_data = process_note_results(db_note_results)
+        return render_template("view.html", menu_item="logout", data=note_data[0])
+    else:
+        return redirect("/")
+
+# Handle update of a note's contents
+@app.route("/update", methods=("GET", "POST"))
+def update():
+    if session.get("username") is not None:
+        if request.method == "POST":
+            session_user = session.get("username")
+            db_res = get_user_by_name(session_user)
+            db_user = parse_user(db_res[0])
+            uid = db_user["uid"]
+            # get the note id and other data from the form
+            note_id = request.form["note_id"]
+            input_title = request.form["title"]
+            input_tags = request.form["tags"]
+            input_content = request.form["content"]
+            update_note(uid, note_id, input_title, input_tags, input_content)
+        return redirect("/dashboard")
+    else:
+        return redirect("/")
+
 
 # Page that shows a random cat :)
 @app.route("/cat")

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+{% extends "meownotes.html" %}
+
+<head>
+  <meta charset="utf-8">
+  <title>MeowNotes</title>
+  {% block head %}
+  {{ super() }}
+  {% endblock %}
+</head>
+
+<body>
+  {% block content %}
+  <div class="content main">
+    <div class="row h-100">
+      <div class="col my-auto">
+        <div class="note-metadata">
+          <h1>{{ data['title'] }}</h1>
+          <h5>date created: {{ data['ui_date'] }}</h5>
+          <p>tags: {{ data['tags'] }}</p>
+        </div>
+      </div>
+      <div class="col-8 my-auto text-center">
+        <div class="note-content">
+          <p>{{ data['content'] }}</p>
+        </div>
+      </div>
+      <div class="col-2 my-auto">
+        <div class="view-controls">
+          <div class="meownotes-button meownotes-link my-auto mb-1">
+            <span class="align-middle">
+              <a data-toggle="modal" data-target="#edit">edit</a>
+            </span>
+          </div>
+          <div class="meownotes-button meownotes-link my-auto">
+            <span class="align-middle">
+              <a href="{{ url_for('dashboard') }}">return</a>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="edit-label" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content meownotes-modal">
+        <div class="modal-header">
+          <h4 class="modal-title" id="edit-label">update note</h4>
+        </div>
+        <div class="modal-body">
+          <form role="form" method="POST" action="/update">
+            <input type="hidden" id="note_id" name="note_id" value="{{ data['note_id'] }}">
+            <div class="form-group">
+              <label for="title" class="control-label">title</label>
+              <input type="text" class="form-control meownotes-input" id="title" name="title"
+                value="{{ data['title'] }}">
+            </div>
+            <div class="form-group">
+              <label for="tags" class="control-label">tags</label>
+              <input type="text" class="form-control meownotes-input" id="tags" name="tags"
+                value="{{ ', '.join(data['tags']) }}">
+            </div>
+            <div class="form-group">
+              <label for="content" class="control-label">content</label>
+              <textarea class="form-control meownotes-input" id="content"
+                name="content">{{ data['content'] }}</textarea>
+            </div>
+            <button type="submit" class="meownotes-button btn btn-primary">update</button>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="meownotes-button btn btn-default" data-dismiss="modal">cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endblock %}
+  {% block scripts %}
+  {{ super() }}
+  {% endblock %}
+</body>
+
+</html>

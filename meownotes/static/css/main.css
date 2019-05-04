@@ -26,13 +26,25 @@ h1 {
     margin-top: 1rem !important;
 }
 
+.mb-1 {
+    margin-bottom: 1rem !important;
+}
+
+.ml-1 {
+    margin-left: 1rem !important;
+}
+
+.mr-1 {
+    margin-right: 1rem !important;
+}
+
 .meownotes-bg-warning:hover {
     background-color: #EA526F !important;
-  }
-  
-  .meownotes-go-accent:hover {
+}
+
+.meownotes-go-accent:hover {
     background-color: #FFB20F !important;
-  }
+}
 
 /* -------------- navbar area styling -------------- */
 
@@ -93,7 +105,7 @@ h1 {
 }
 
 .meownotes-link:hover>span>a {
-    color: var(--meownotes-light);
+    color: var(--meownotes-light) !important;
 }
 
 /* -------------- content area styling -------------- */
@@ -134,4 +146,16 @@ h1 {
     background-color: #30D1E8;
     border: 1px solid #30D1E8;
     color: #ffffff;
+}
+
+/* -------------- single notes view styling -------------- */
+
+.note-content {
+    font-size: 200%;
+    text-align: justify;
+    font-weight: 300;
+}
+
+.meownotes-modal {
+    border-radius: 25px;
 }
