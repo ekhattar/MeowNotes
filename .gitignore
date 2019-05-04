@@ -1,3 +1,5 @@
 __pycache__/
 meownotes/__pycache__/
 .vscode/
+.DS_Store
+venv/

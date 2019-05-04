@@ -12,7 +12,7 @@ app.config.from_object("config.Config")
 # Landing page - either shows login/sign-up or redirects to dashboard
 @app.route("/")
 def landing():
-    return render_template("landing.html")
+    return render_template("landing.html", menu_item="login")
 
 # Handles login and sign up before redirecting to the dashboard
 @app.route("/login", methods=("GET", "POST"))
