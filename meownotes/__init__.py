@@ -14,6 +14,14 @@ app.config.from_object("config.Config")
 def landing():
     return render_template("landing.html", menu_item="login")
 
+# Page that shows a random cat :)
+@app.route("/cat")
+def cat():
+    # append a random number to the end of the cat image url
+    # to prevent caching (otherwise same photo always shown)
+    cat = "https://cataas.com/cat" + "?" +str(random.randint(1,101))
+    return render_template("/cat.html", cat=cat)
+
 # Handles login and sign up before redirecting to the dashboard
 @app.route("/login", methods=("GET", "POST"))
 def login():
@@ -78,7 +86,7 @@ def view():
         db_res = get_user_by_name(session_user)
         db_user = parse_user(db_res[0])
         uid = db_user["uid"]
-        # get the note id from the param
+        # get the note id from the query string param
         requested_note_id = request.args.get("id")
         # retrieve note from the database
         db_note_results = get_note_by_id(uid, requested_note_id)
@@ -107,13 +115,47 @@ def update():
         return redirect("/")
 
 
-# Page that shows a random cat :)
-@app.route("/cat")
-def cat():
-    # append a random number to the end of the cat image url
-    # to prevent caching (otherwise same photo always shown)
-    cat = "https://cataas.com/cat" + "?" +str(random.randint(1,101))
-    return render_template("/cat.html", cat=cat)
+# Create new note 
+@app.route("/create", methods=("GET", "POST"))
+def create():
+    # display the create page
+    if request.method == "GET":
+        if session.get("username") is not None:
+            return render_template("create.html", menu_item="logout")
+        else:
+            return redirect("/")
+    # save the note in the db for POST requests (from the form on the create page)
+    else:
+        if session.get("username") is not None:
+            session_user = session.get("username")
+            db_res = get_user_by_name(session_user)
+            db_user = parse_user(db_res[0])
+            uid = db_user["uid"]
+            # get the form inputs
+            input_title = request.form["title"]
+            input_tags = request.form["tags"]
+            input_content = request.form["content"]
+            create_note(uid, input_title, input_tags, input_content)
+            return redirect("/dashboard")
+        else:
+            return redirect("/")
+
+# Handle deletion of a note
+@app.route("/delete", methods=("GET", "POST"))
+def delete():
+    if session.get("username") is not None:
+        if request.method == "POST":
+            session_user = session.get("username")
+            db_res = get_user_by_name(session_user)
+            db_user = parse_user(db_res[0])
+            uid = db_user["uid"]
+            # get the note id from the form POST request
+            requested_note_id = request.form["note_id"]
+            # delete note from the database
+            delete_note_by_id(uid, requested_note_id)
+        return redirect("/dashboard")
+    else:
+        return redirect("/")
 
 
 if __name__ == "__main__":
