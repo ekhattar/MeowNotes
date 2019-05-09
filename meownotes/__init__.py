@@ -58,7 +58,7 @@ def login():
             session["username"] = input_username.lower()
             return redirect("/dashboard")
 
-# Main dashboard page
+# Dashboard - shows notes for the user
 @app.route("/dashboard")
 def dashboard():
     if session.get("username") is not None:
@@ -73,13 +73,13 @@ def dashboard():
     else:
         return redirect("/")
 
-# Log out
+# Log out button in menu - handles logout then redirects to landing page
 @app.route("/logout")
 def logout():
     session.pop("username", None)
     return redirect("/")
 
-# Shows a note based on its id
+# Shows a note based on its id in single note view
 @app.route("/view")
 def view():
     if session.get("username") is not None:
@@ -93,7 +93,7 @@ def view():
     else:
         return redirect("/")
 
-# Handle update of a note's contents
+# Handle update of a note's contents (editing done from single note view)
 @app.route("/update", methods=("GET", "POST"))
 def update():
     if session.get("username") is not None:
@@ -110,7 +110,7 @@ def update():
         return redirect("/")
 
 
-# Create new note 
+# Create new note (can be done from the dashboard)
 @app.route("/create", methods=("GET", "POST"))
 def create():
     # display the create page
@@ -132,7 +132,7 @@ def create():
         else:
             return redirect("/")
 
-# Handle deletion of a note
+# Delete a note (can be done from the dashboard or search results pages)
 @app.route("/delete", methods=("GET", "POST"))
 def delete():
     if session.get("username") is not None:
@@ -168,7 +168,7 @@ def search():
     else:
         return redirect("/")
 
-# Filters last search result by whatever was checked
+# Filters last search result by whatever was checked (done from search page)
 @app.route("/filter", methods=("GET", "POST"))
 def filter():
     if session.get("username") is not None:
