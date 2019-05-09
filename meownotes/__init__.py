@@ -12,7 +12,10 @@ app.config.from_object("config.Config")
 # Landing page - either shows login/sign-up or redirects to dashboard
 @app.route("/")
 def landing():
-    return render_template("landing.html", menu_item="login")
+    if session.get("username") is not None:
+        return redirect("/dashboard")
+    else:
+        return render_template("landing.html", menu_item="login")
 
 # Page that shows a random cat :)
 @app.route("/cat")
