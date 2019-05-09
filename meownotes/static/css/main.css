@@ -61,7 +61,7 @@ h1 {
 /* -------------- form inputs styling -------------- */
 
 .meownotes-input {
-    border-radius: 25px;
+    border-radius: 25px !important;
     border: 1px solid var(--meownotes-blue);
     line-height: 1.2;
 }
@@ -78,7 +78,7 @@ h1 {
     font-size: 1.25rem;
     text-align: center;
     padding: .375rem .75rem;
-    border-radius: 25px;
+    border-radius: 25px !important;
     background-color: var(--meownotes-light);
     color: var(--meownotes-blue);
     border: 1px solid var(--meownotes-blue);

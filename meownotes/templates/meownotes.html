@@ -21,6 +21,19 @@
         <a class="navbar-brand" href="{{ url_for('landing') }}"><img
                 src="{{ url_for('static', filename='img/logo.png') }}"
                 style="max-width:40px;margin-right:0.5rem;">MeowNotes</a>
+        {% if menu_item == 'logout' %}
+        <form method="POST" action="/search">
+            <div class="input-group">
+                <input type="text" id="search" name="search" class="form-control mr-1 meownotes-input"
+                    placeholder="search" required="">
+                <span class="input-group-btn">
+                    <button class="meownotes-button btn btn-med btn-primary btn-block" type="submit"><i
+                            class="fas fa-search"></i>
+                    </button>
+                </span>
+            </div>
+        </form>
+        {% endif %}
         <div class="meownotes-button meownotes-link"
             style="width:4rem;line-height:1.2;margin-left:1rem;margin-right:1rem;">
             <span class="align-middle">

@@ -60,9 +60,7 @@ def login():
 def dashboard():
     if session.get("username") is not None:
         session_user = session.get("username")
-        db_res = get_user_by_name(session_user)
-        db_user = parse_user(db_res[0])
-        uid = db_user["uid"]
+        uid = get_id_by_user(session.get("username"))
         # get the notes associated with the user
         db_user_results = get_notes_by_user(uid)
         note_data = process_note_results(db_user_results)
@@ -82,10 +80,7 @@ def logout():
 @app.route("/view")
 def view():
     if session.get("username") is not None:
-        session_user = session.get("username")
-        db_res = get_user_by_name(session_user)
-        db_user = parse_user(db_res[0])
-        uid = db_user["uid"]
+        uid = get_id_by_user(session.get("username"))
         # get the note id from the query string param
         requested_note_id = request.args.get("id")
         # retrieve note from the database
@@ -100,10 +95,7 @@ def view():
 def update():
     if session.get("username") is not None:
         if request.method == "POST":
-            session_user = session.get("username")
-            db_res = get_user_by_name(session_user)
-            db_user = parse_user(db_res[0])
-            uid = db_user["uid"]
+            uid = get_id_by_user(session.get("username"))
             # get the note id and other data from the form
             note_id = request.form["note_id"]
             input_title = request.form["title"]
@@ -127,10 +119,7 @@ def create():
     # save the note in the db for POST requests (from the form on the create page)
     else:
         if session.get("username") is not None:
-            session_user = session.get("username")
-            db_res = get_user_by_name(session_user)
-            db_user = parse_user(db_res[0])
-            uid = db_user["uid"]
+            uid = get_id_by_user(session.get("username"))
             # get the form inputs
             input_title = request.form["title"]
             input_tags = request.form["tags"]
@@ -145,15 +134,56 @@ def create():
 def delete():
     if session.get("username") is not None:
         if request.method == "POST":
-            session_user = session.get("username")
-            db_res = get_user_by_name(session_user)
-            db_user = parse_user(db_res[0])
-            uid = db_user["uid"]
+            uid = get_id_by_user(session.get("username"))
             # get the note id from the form POST request
             requested_note_id = request.form["note_id"]
             # delete note from the database
             delete_note_by_id(uid, requested_note_id)
         return redirect("/dashboard")
+    else:
+        return redirect("/")
+
+# Handle search (available only if logged in)
+@app.route("/search", methods=("GET", "POST"))
+def search():
+    if session.get("username") is not None:
+        # show search results
+        if request.method == "POST":
+            uid = get_id_by_user(session["username"])
+            # get the search term
+            input_term = request.form["search"]
+            # store the current search term
+            session["search"] = input_term.lower()
+            # retrieve notes from the database that match the search term
+            db_search_results = get_search_notes(uid, input_term)
+            note_data = process_note_results(db_search_results)
+            num_results = len(note_data)
+            return render_template("search.html", menu_item="logout", data=note_data, num=num_results, term=input_term)
+        # show empty search page
+        else:
+            return render_template("search.html", menu_item="logout", data={}, num=0)
+    else:
+        return redirect("/")
+
+# Filters last search result by whatever was checked
+@app.route("/filter", methods=("GET", "POST"))
+def filter():
+    if session.get("username") is not None:
+        # show search results
+        if request.method == "POST":
+            uid = get_id_by_user(session["username"])
+            if session.get("search") is not None:
+                last_search = session.get("search")
+                input_fields = request.form.getlist("fields")
+                 # retrieve notes from the database that match the search term
+                db_search_results = get_search_notes(uid, last_search, input_fields)
+                note_data = process_note_results(db_search_results)
+                num_results = len(note_data)
+                return render_template("search.html", menu_item="logout", data=note_data, num=num_results, term=last_search)
+            else:
+                return redirect("/search")
+        else:
+            return redirect("/search")
     else:
         return redirect("/")
 

@@ -136,6 +136,12 @@ def get_user_by_id(uid):
     results = execute_select(query)
     return results
 
+def get_id_by_user(username):
+    db_res = get_user_by_name(username)
+    db_user = parse_user(db_res[0])
+    uid = db_user["uid"]
+    return uid
+
 def delete_user_by_id(uid):
     query_input_items = [{"val": uid, "cols": ["uid"], "type": "exact", "condition": True}]
     query = prepare_query("DELETE_CONDITIONAL", "users", query_input_items)
@@ -242,6 +248,41 @@ def update_note(uid, note_id, title, tags, content):
         print(msg)
     return msg
 
+"""
+Retrieve all notes for the current user that match the search
+searches the "title", "tags", and "content" columns
+returns a list of notes
+Example output: [(1, 1, '2019-05-05T16:15:14.429235', 'My First Note', 'uni', 'This is the text of the note.')]
+"""
+def get_search_notes(uid, search_string, search_fields = None):
+    # search for matches in the TITLE for this user
+    title_query = prepare_query("GET_CONDITIONAL", "notes", [{"val": uid, "cols": ["uid"], "type": "exact", "condition": True},
+        {"val": search_string, "cols": ["title"], "type": "contains", "condition": True}], True)
+    title_results = execute_select(title_query)
+    # search for matches in the TAGS for this user
+    tags_query = prepare_query("GET_CONDITIONAL", "notes", [{"val": uid, "cols": ["uid"], "type": "exact", "condition": True},
+        {"val": search_string, "cols": ["tags"], "type": "contains", "condition": True}], True)
+    tags_results = execute_select(tags_query)
+    # search for matches in the CONTENT for this user
+    contents_query = prepare_query("GET_CONDITIONAL", "notes", [{"val": uid, "cols": ["uid"], "type": "exact", "condition": True},
+        {"val": search_string, "cols": ["content"], "type": "contains", "condition": True}], True)
+    contents_results = execute_select(contents_query)
+    # combine the three result lists
+    results = []
+    if search_fields is not None:
+        if "title" in search_fields:
+            results += title_results
+        if "tags" in search_fields:
+            results += tags_results
+        if "content" in search_fields:
+            results += contents_results
+    else:
+        results = title_results + tags_results + contents_results
+    # convert into a set in order to remove duplicate results
+    # then convert back into a list
+    results = list(set(results))
+    return results
+
 ############ Functions to parse db results and return as objects ############
 
 # Takes a single user row DB result and puts it into a parsable form
@@ -276,3 +317,4 @@ def process_note_results(db_notes):
     # Sort the list by date
     parsed_notes.sort(key=operator.itemgetter('date_created'))
     return parsed_notes
+
