@@ -67,3 +67,5 @@ source venv/bin/activate
 export FLASK_APP=meownotes/__init__.py
 flask run
 ```
+
+See MeowNotes at [localhost:5000/](http://localhost:5000/)
