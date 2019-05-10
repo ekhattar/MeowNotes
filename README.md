@@ -52,6 +52,8 @@ Dev/debug mode (live reload on change)
 ```bash
 # Start the virtual env
 source venv/bin/activate
+# Set env var to see extra debug output
+export MEOWNOTES_DEBUG=True
 # Start in debug mode (live reload on change)
 python3 meownotes/__init__.py
 ```

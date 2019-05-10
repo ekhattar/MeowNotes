@@ -18,7 +18,7 @@
 
 <body>
     <nav class="navbar navbar-dark bg-dark">
-        <a class="navbar-brand" href="{{ url_for('dashboard') }}"><img
+        <a class="navbar-brand app-title" href="{{ url_for('dashboard') }}"><img
                 src="{{ url_for('static', filename='img/logo.png') }}"
                 style="max-width:40px;margin-right:0.5rem;">MeowNotes</a>
         {% if menu_item == 'logout' %}
@@ -27,8 +27,7 @@
                 <input type="text" id="search" name="search" class="form-control mr-1 meownotes-input"
                     placeholder="search" required="">
                 <span class="input-group-btn">
-                    <button class="meownotes-button btn btn-med btn-primary btn-block" type="submit"><i
-                            class="fas fa-search"></i>
+                    <button class="meownotes-button btn btn-med btn-primary btn-block" type="submit" data-toggle="tooltip" title="search for a note"><i class="fas fa-search"></i>
                     </button>
                 </span>
             </div>
@@ -37,19 +36,19 @@
         <div class="meownotes-button meownotes-link"
             style="width:4rem;line-height:1.2;margin-left:1rem;margin-right:1rem;">
             <span class="align-middle">
-                <a href="{{ url_for('cat') }}"><i class="fas fa-cat"></i></a>
+                <a href="{{ url_for('cat') }}" data-toggle="tooltip" title="see a cat!"><i class="fas fa-cat"></i></a>
             </span>
         </div>
         <div class="meownotes-button meownotes-link"
-        style="width:8rem;line-height:1.2;margin-left:1rem;margin-right:1rem;">
-        <span class="align-middle">
-            {% if menu_item == 'logout' %}
-            <a href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt"></i> {{menu_item}}</a>
-            {% else %}
-            <a href="{{ url_for('landing') }}"><i class="fas fa-sign-in-alt"></i> {{menu_item}}</a>
-            {% endif %}
-        </span>
-    </div>
+            style="width:8rem;line-height:1.2;margin-left:1rem;margin-right:1rem;">
+            <span class="align-middle">
+                {% if menu_item == 'logout' %}
+                <a href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt"></i> {{menu_item}}</a>
+                {% else %}
+                <a href="{{ url_for('landing') }}"><i class="fas fa-sign-in-alt"></i> {{menu_item}}</a>
+                {% endif %}
+            </span>
+        </div>
     </nav>
     {% block content %}
     {% endblock %}

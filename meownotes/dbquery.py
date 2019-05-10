@@ -6,7 +6,11 @@ import os
 import dateutil.parser
 from utils import *
 
-DEBUG = True
+# App config - determines if debug output is shown in the console
+DEBUG = os.getenv("MEOWNOTES_DEBUG", False)
+
+if DEBUG:
+    print(">>> INFO: MeowNotes DEBUG is set to true!")
 
 ############ DB config ############
 
@@ -79,6 +83,8 @@ def execute_select(query):
     cursor.execute(query)
     result = cursor.fetchall()
     conn.close()
+    if DEBUG:
+        print(result)
     return result
 
 def execute_and_commit(query):
