@@ -45,7 +45,7 @@ pip install flask
 pip install python-dateutil
 ```
 
-## Start MeowNotes
+## Start MeowNotes locally
 
 Dev/debug mode (live reload on change)
 

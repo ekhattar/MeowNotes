@@ -33,6 +33,11 @@
               <a data-toggle="modal" data-target="#edit">edit</a>
             </span>
           </div>
+          <div class="meownotes-button meownotes-link my-auto mb-1">
+            <span class="align-middle">
+              <a href="{{ url_for('download', id=data['note_id']) }}">download</a>
+            </span>
+          </div>
           <div class="meownotes-button meownotes-link my-auto">
             <span class="align-middle">
               <a href="{{ url_for('dashboard') }}">return</a>

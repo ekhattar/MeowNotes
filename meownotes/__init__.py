@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-from flask import Flask, request, redirect, render_template, session, flash, send_from_directory, url_for, send_file
+from flask import Flask, request, redirect, render_template, session, flash, send_from_directory, url_for, send_file, Response
 import random
 from dbquery import *
 from utils import *
@@ -90,6 +90,24 @@ def view():
         db_note_results = get_note_by_id(uid, requested_note_id)
         note_data = process_note_results(db_note_results)
         return render_template("view.html", menu_item="logout", data=note_data[0])
+    else:
+        return redirect("/")
+
+# Download as plain text file the contents of the note
+@app.route("/download")
+def download():
+    if session.get("username") is not None:
+        uid = get_id_by_user(session.get("username"))
+        # get the note id from the query string param
+        requested_note_id = request.args.get("id")
+        # retrieve note from the database
+        db_note_results = get_note_by_id(uid, requested_note_id)
+        note_data = reformat_for_export(process_note_results(db_note_results)[0])
+        file_name = "note_" + str(requested_note_id) + ".txt"
+        return Response(note_data,
+                       mimetype="text/plain",
+                       headers={"Content-Disposition":
+                                    "attachment;filename=" + file_name})
     else:
         return redirect("/")
 
