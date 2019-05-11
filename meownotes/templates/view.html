@@ -30,17 +30,17 @@
         <div class="view-controls">
           <div class="meownotes-button meownotes-link my-auto mb-1">
             <span class="align-middle">
-              <a data-toggle="modal" data-target="#edit">edit</a>
+              <a data-toggle="modal" data-target="#edit"><i class="fas fa-edit"></i> edit</a>
             </span>
           </div>
           <div class="meownotes-button meownotes-link my-auto mb-1">
             <span class="align-middle">
-              <a href="{{ url_for('download', id=data['note_id']) }}">download</a>
+              <a href="{{ url_for('download', id=data['note_id']) }}"><i class="fas fa-file-download"></i> download</a>
             </span>
           </div>
           <div class="meownotes-button meownotes-link my-auto">
             <span class="align-middle">
-              <a href="{{ url_for('dashboard') }}">return</a>
+              <a href="{{ url_for('dashboard') }}"><i class="fas fa-home"></i> return</a>
             </span>
           </div>
         </div>
@@ -71,11 +71,11 @@
               <textarea class="form-control meownotes-input" id="content"
                 name="content">{{ data['content'] }}</textarea>
             </div>
-            <button type="submit" class="meownotes-button btn btn-primary">update</button>
+            <button type="submit" class="meownotes-button btn btn-primary"><i class="fas fa-save"></i> update</button>
           </form>
         </div>
         <div class="modal-footer">
-          <button type="button" class="meownotes-button btn btn-default" data-dismiss="modal">cancel</button>
+          <button type="button" class="meownotes-button btn btn-default" data-dismiss="modal"><i class="fas fa-window-close"></i> cancel</button>
         </div>
       </div>
     </div>
