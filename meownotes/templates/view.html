@@ -28,7 +28,7 @@
       </div>
       <div class="col-2 my-auto">
         <div class="view-controls">
-          <div class="meownotes-button meownotes-link my-auto mb-1">
+          <div class="meownotes-button meownotes-link my-auto mb-1 meownotes-go-accent">
             <span class="align-middle">
               <a data-toggle="modal" data-target="#edit"><i class="fas fa-edit"></i> edit</a>
             </span>
@@ -38,6 +38,11 @@
               <a href="{{ url_for('download', id=data['note_id']) }}"><i class="fas fa-file-download"></i> download</a>
             </span>
           </div>
+          <form method="POST" action="/delete" class="mb-1">
+            <input type="hidden" id="note_id" name="note_id" value="{{ data['note_id'] }}">
+            <button class="meownotes-button meownotes-link btn btn-med btn-primary btn-block meownotes-bg-warning"
+              type="submit"><i class="fas fa-trash"></i> delete</button>
+          </form>
           <div class="meownotes-button meownotes-link my-auto">
             <span class="align-middle">
               <a href="{{ url_for('dashboard') }}"><i class="fas fa-home"></i> return</a>

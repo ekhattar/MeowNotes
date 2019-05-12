@@ -11,7 +11,7 @@ Additionally, MeowNotes makes use of the following: [Bootstrap](https://getboots
 (Planned) structure of this repo:
 
 ```bash
-|--documentation    technical & product documentation
+|--documentation    basic documentation
 |--meownotes        main source code directory including SQLite db
 |----static         assets for the flask app
 |------css          custom & bootstrap css files
@@ -19,16 +19,6 @@ Additionally, MeowNotes makes use of the following: [Bootstrap](https://getboots
 |------js           custom & bootstrap + dependencies js files
 |----templates      html templates for the flask app
 ```
-
-## Features
-
-- __sign up / login__
-- __see a random cat__
-- __create__ a new note with a title, tags, and content
-- __edit__ an existing note
-- __delete__ an existing note
-- __download__ an existing note
-- __search__ for a note by its title, tags, and/or content
 
 ## Prerequisites
 
@@ -79,3 +69,23 @@ flask run
 ```
 
 See MeowNotes at [localhost:5000/](http://localhost:5000/)
+
+## Features
+
+- __sign up / login__
+- __view a random cat__
+- __create__ a new note with a title, tags, and content
+- __edit__ an existing note
+- __delete__ an existing note
+- __download__ an existing note
+- __search__ for a note by its title, tags, and/or content
+
+### Screenshots
+
+![landing](documentation/screenshots/landing.png)
+![dashboard](documentation/screenshots/dashboard.png)
+![create note](documentation/screenshots/create-note-view.png)
+![view note](documentation/screenshots/single-note-view.png)
+![edit note](documentation/screenshots/edit-note-view.png)
+![download(ed) note](documentation/screenshots/downloaded-file.png)
+![random cat](documentation/screenshots/random-cat.png)

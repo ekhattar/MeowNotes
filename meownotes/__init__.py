@@ -150,7 +150,7 @@ def create():
         else:
             return redirect("/")
 
-# Delete a note (can be done from the dashboard or search results pages)
+# Delete a note (can be done from the dashboard, search results, or single view pages)
 @app.route("/delete", methods=("GET", "POST"))
 def delete():
     if session.get("username") is not None:
