@@ -20,6 +20,16 @@ Additionally, MeowNotes makes use of the following: [Bootstrap](https://getboots
 |----templates      html templates for the flask app
 ```
 
+## Features
+
+- __sign up / login__
+- __see a random cat__
+- __create__ a new note with a title, tags, and content
+- __edit__ an existing note
+- __delete__ an existing note
+- __download__ an existing note
+- __search__ for a note by its title, tags, and/or content
+
 ## Prerequisites
 
 - python3
