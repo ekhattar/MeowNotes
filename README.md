@@ -8,7 +8,7 @@ MeowNotes is a Python-based web app written with [Flask](http://flask.pocoo.org/
 
 Additionally, MeowNotes makes use of the following: [Bootstrap](https://getbootstrap.com/docs/4.3/getting-started/introduction/), [Font Awesome](https://fontawesome.com/), [Google Fonts](https://fonts.google.com/), and [Cat as a Service](https://cataas.com/#/).
 
-(Planned) structure of this repo:
+Structure of this repo:
 
 ```bash
 |--documentation    basic documentation
