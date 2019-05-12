@@ -84,12 +84,25 @@ See MeowNotes at [localhost:5000/](http://localhost:5000/)
 
 ### Screenshots
 
+#### Landing (login / sign-up)
 ![landing](documentation/screenshots/landing.png)
+
+#### Dashboard
 ![dashboard](documentation/screenshots/dashboard.png)
+
+#### Create a note
 ![create note](documentation/screenshots/create-note-view.png)
+
+#### View a note
 ![view note](documentation/screenshots/single-note-view.png)
+
+#### Edit a note
 ![edit note](documentation/screenshots/edit-note-view.png)
+
+#### Downloaded note
 ![download(ed) note](documentation/screenshots/downloaded-file.png)
+
+#### View a random cat
 ![random cat](documentation/screenshots/random-cat.png)
 
 ### Routes
