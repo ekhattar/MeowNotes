@@ -72,13 +72,15 @@ See MeowNotes at [localhost:5000/](http://localhost:5000/)
 
 ## Features
 
-- __sign up / login__
-- __view a random cat__
-- __create__ a new note with a title, tags, and content
-- __edit__ an existing note
-- __delete__ an existing note
-- __download__ an existing note
-- __search__ for a note by its title, tags, and/or content
+- __sign up / login__ (from the landing)
+- __logout__ (from the menu bar)
+- __view a random cat__ (from the menu bar)
+- __create__ a new note with a title, tags, and content (from the dashboard)
+- __edit__ an existing note (from the single note view)
+- __delete__ an existing note (from the dashboard, search, or single note view)
+- __download__ an existing note (from the single note view)
+- __search__ for a note by its title, tags, and/or content (from the menu bar)
+- __filter__ the search to limit to a specific field (from the search results page)
 
 ### Screenshots
 
@@ -89,3 +91,39 @@ See MeowNotes at [localhost:5000/](http://localhost:5000/)
 ![edit note](documentation/screenshots/edit-note-view.png)
 ![download(ed) note](documentation/screenshots/downloaded-file.png)
 ![random cat](documentation/screenshots/random-cat.png)
+
+### Routes
+
+- `/`
+    - `GET` show the langing (login/sign-up page)
+- `/cat`
+    - `GET` show the cat page with a random cat
+- `/login`
+    - `GET` redirect to the dashboard if signed in
+    - `POST` either login or create a new account; if password is wrong for an existing account, the landing page is rerendered with the warning message; if the password is right or a new account is created, redirect to the dashboard
+- `/logout`
+    - `GET` remove the username from the session and redirect to the landing
+- `/dashboard`
+    - `GET` show the dashboard page with the user's notes
+- `/view`
+    - `GET` show the view page for the given note by id
+- `/download`
+    - `GET` note data sent as raw text file to download
+- `/update`
+    - `GET` redirect to the dashboard
+    - `POST` (DB) update the note with the given id from the form
+- `/create`
+    - `GET` show the create page
+    - `POST` (DB) create a new note
+- `/delete`
+    - `GET` redirect to dashboard
+    - `POST` (DB) delete the note with the given id from the form
+- `/search`
+    - GET: show empty search results page
+    - POST: show populated search results
+- `/filter`
+    - GET: redirect to (empty) search results page
+    - POST: render search results with filters applied
+
+_Note_: all `GET` requests additionally to the above redirect to the landing (login page) if the user is not logged in
+
