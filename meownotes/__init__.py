@@ -3,6 +3,7 @@ from flask import Flask, request, redirect, render_template, session, flash, sen
 import random
 from dbquery import *
 from utils import *
+import config
 
 app = Flask(__name__)
 
