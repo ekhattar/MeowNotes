@@ -13,6 +13,7 @@ app.config.from_object("config.Config")
 
 # Load if port is set in the environment
 PORT = os.getenv("MEOWNOTES_PORT", None)
+HOST = os.getenv("MEOWNOTES_HOST", "localhost")
 
 # Landing page - either shows login/sign-up or redirects to dashboard
 @app.route("/")
@@ -216,6 +217,6 @@ def filter():
 
 if __name__ == "__main__":
     if PORT is not None:
-        app.run(debug=True, host='0.0.0.0', port=PORT)
+        app.run(debug=True, host=HOST, port=PORT)
     else:
         app.run(debug=True)
