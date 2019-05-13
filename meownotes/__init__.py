@@ -1,14 +1,18 @@
 #!/usr/bin/env python3
 from flask import Flask, request, redirect, render_template, session, flash, send_from_directory, url_for, send_file, Response
 import random
+import os
 from dbquery import *
 from utils import *
-import config
+from config import Config
 
 app = Flask(__name__)
 
 # Load the config
 app.config.from_object("config.Config")
+
+# Load if port is set in the environment
+PORT = os.getenv("MEOWNOTES_PORT", None)
 
 # Landing page - either shows login/sign-up or redirects to dashboard
 @app.route("/")
@@ -211,4 +215,7 @@ def filter():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    if PORT is not None:
+        app.run(debug=True, host='0.0.0.0', port=PORT)
+    else:
+        app.run(debug=True)
