@@ -35,7 +35,7 @@ Example use:
 prepare_query("GET_CONDITIONAL", "users", [{"val": "kroshka", "cols": ["username"], "type": "exact", "condition": True}, 
                                            {"val": 1, "cols": ["uid"], "type": "exact", "condition": True}])
 """
-def prepare_query(template, table, query_input_items = [], search = False):
+def prepare_query(template, table, query_input_items = []):
     # get the desired SQl string template
     query = eval(template)
     # replace with the desired table
@@ -263,15 +263,15 @@ Example output: [(1, 1, '2019-05-05T16:15:14.429235', 'My First Note', 'uni', 'T
 def get_search_notes(uid, search_string, search_fields = None):
     # search for matches in the TITLE for this user
     title_query = prepare_query("GET_CONDITIONAL", "notes", [{"val": uid, "cols": ["uid"], "type": "exact", "condition": True},
-        {"val": search_string, "cols": ["title"], "type": "contains", "condition": True}], True)
+        {"val": search_string, "cols": ["title"], "type": "contains", "condition": True}])
     title_results = execute_select(title_query)
     # search for matches in the TAGS for this user
     tags_query = prepare_query("GET_CONDITIONAL", "notes", [{"val": uid, "cols": ["uid"], "type": "exact", "condition": True},
-        {"val": search_string, "cols": ["tags"], "type": "contains", "condition": True}], True)
+        {"val": search_string, "cols": ["tags"], "type": "contains", "condition": True}])
     tags_results = execute_select(tags_query)
     # search for matches in the CONTENT for this user
     contents_query = prepare_query("GET_CONDITIONAL", "notes", [{"val": uid, "cols": ["uid"], "type": "exact", "condition": True},
-        {"val": search_string, "cols": ["content"], "type": "contains", "condition": True}], True)
+        {"val": search_string, "cols": ["content"], "type": "contains", "condition": True}])
     contents_results = execute_select(contents_query)
     # combine the three result lists
     results = []
