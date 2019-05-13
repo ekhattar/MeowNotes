@@ -22,6 +22,7 @@ Structure of this repo:
 
 ## Prerequisites
 
+- make
 - python3
 - virtual env
 
@@ -49,6 +50,12 @@ pip install python-dateutil
 
 Dev/debug mode (live reload on change)
 
+(shortcut)
+```bash
+# in the MeowNotes folder
+make run-debug
+```
+
 ```bash
 # Start the virtual env
 source venv/bin/activate
@@ -59,6 +66,12 @@ python3 meownotes/__init__.py
 ```
 
 "Production" mode
+
+(shortcut)
+```bash
+# in the MeowNotes folder
+make run-prod
+```
 
 ```bash
 # Start the virtual env
