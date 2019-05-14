@@ -12,4 +12,4 @@ run-prod:
 	cd $(APP_DIR) && export PYTHONPATH=. && export FLASK_APP=$(APP_ENTRY_POINT) && export FLASK_RUN_HOST=$(MEOWNOTES_HOST)&& export FLASK_RUN_PORT=$(MEOWNOTES_PORT) && flask run
 
 run-wsgi:
-	export MEOWNOTES_LOCALDEV=True && uwsgi --socket $(MEOWNOTES_HOST):5000 --protocol=http -w wsgi:application
+	export MEOWNOTES_LOCALDEV=True && uwsgi --socket $(MEOWNOTES_HOST):$(MEOWNOTES_PORT) --protocol=http -w wsgi:application
