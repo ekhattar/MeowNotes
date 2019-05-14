@@ -9,7 +9,7 @@ run-debug:
 
 run-prod:
 	echo ">>> INFO: starting MeowNotes with prod mode enabled on $(MEOWNOTES_HOST):$(MEOWNOTES_PORT)/"
-	cd $(APP_DIR) && export PYTHONPATH=. && export FLASK_APP=$(APP_ENTRY_POINT) && export FLASK_RUN_HOST=$(MEOWNOTES_HOST)&& export FLASK_RUN_PORT=$(MEOWNOTES_PORT) && flask run
+	export FLASK_APP=$(APP_DIR) && export FLASK_RUN_HOST=$(MEOWNOTES_HOST) && export FLASK_RUN_PORT=$(MEOWNOTES_PORT) && flask run
 
 run-wsgi:
 	export MEOWNOTES_LOCALDEV=True && uwsgi --socket $(MEOWNOTES_HOST):$(MEOWNOTES_PORT) --protocol=http -w wsgi:application
