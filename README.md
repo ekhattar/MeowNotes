@@ -2,6 +2,8 @@
 
 The note-taking app for cat lovers.
 
+See live at: http://ekhattar.pythonanywhere.com/
+
 ## About
 
 MeowNotes is a Python-based web app written with [Flask](http://flask.pocoo.org/) and an [SQLite](https://www.sqlite.org/index.html) database.
@@ -51,13 +53,20 @@ pip install uwsgi
 
 ## Start MeowNotes locally
 
-Dev/debug mode (live reload on change)
+### Dev/debug mode 
 
-(shortcut)
+This mode has live reload on change as well as additional logging output in the console including the prepared SQL queries and results; can use either `make` or "manually" run the necessary commands to start.
+
+See MeowNotes at [localhost:5000/](http://localhost:5000/).
+
+Start dev/debug mode with `make`:
+
 ```bash
 # In the MeowNotes folder
 make run-debug
 ```
+
+Start manually:
 
 ```bash
 # Start the virtual env
@@ -68,13 +77,20 @@ export MEOWNOTES_DEBUG=True
 python3 meownotes/__init__.py
 ```
 
-"Production" mode
+### "Production" mode
 
-(shortcut)
+This mode suppresses the additional logging output and starts on a different port.
+
+See MeowNotes at [localhost:8000/](http://localhost:8000/).
+
+Start with `make`:
+
 ```bash
 # In the MeowNotes folder
 make run-prod
 ```
+
+Start manually:
 
 ```bash
 # Start the virtual env
@@ -90,8 +106,6 @@ Using the wsgi server:
 # In the MeowNotes folder
 make run-wsgi
 ```
-
-See MeowNotes at [localhost:5000/](http://localhost:5000/)
 
 ## Features
 
