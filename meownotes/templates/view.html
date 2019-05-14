@@ -35,7 +35,7 @@
           </div>
           <div class="meownotes-button meownotes-link my-auto mb-1">
             <span class="align-middle">
-              <a href="{{ url_for('download', id=data['note_id']) }}"><i class="fas fa-file-download"></i> download</a>
+              <a href="{{ url_for('meownotes.download', id=data['note_id']) }}"><i class="fas fa-file-download"></i> download</a>
             </span>
           </div>
           <form method="POST" action="/delete" class="mb-1">
@@ -45,7 +45,7 @@
           </form>
           <div class="meownotes-button meownotes-link my-auto">
             <span class="align-middle">
-              <a href="{{ url_for('dashboard') }}"><i class="fas fa-home"></i> return</a>
+              <a href="{{ url_for('meownotes.dashboard') }}"><i class="fas fa-home"></i> return</a>
             </span>
           </div>
         </div>

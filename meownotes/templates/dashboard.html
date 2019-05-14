@@ -29,7 +29,7 @@
               <div class="col">
                 <div class="meownotes-button meownotes-link my-auto meownotes-go-accent">
                   <span class="align-middle">
-                    <a href="{{ url_for('create') }}">
+                    <a href="{{ url_for('meownotes.create') }}">
                       <i class="fas fa-plus-circle"></i> create
                     </a>
                   </span>
@@ -62,7 +62,7 @@
               <div class="col-6">
                 <div class="meownotes-button meownotes-link my-auto meownotes-go-accent">
                   <span class="align-middle">
-                    <a href="{{ url_for('view', id=note['note_id']) }}"><i class="far fa-eye"></i> view</a>
+                    <a href="{{ url_for('meownotes.view', id=note['note_id']) }}"><i class="far fa-eye"></i> view</a>
                   </span>
                 </div>
               </div>
