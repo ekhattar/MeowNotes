@@ -22,13 +22,14 @@ Structure of this repo:
 
 ## Prerequisites
 
-- make
 - python3
-- virtual env
+- virtualenv
 
 ```bash
 pip3 install virtualenv
 ```
+- recommended: [make](https://www.gnu.org/software/make/)
+  - needed only if want to use the `Makefile` commands as shortcuts
 
 ## Setup
 
@@ -44,6 +45,8 @@ source venv/bin/activate
 # Install flask and other dependencies in the virtual env
 pip install flask
 pip install python-dateutil
+# Optional: install if want to run with wsgi server locally
+pip install uwsgi
 ```
 
 ## Start MeowNotes locally
@@ -52,7 +55,7 @@ Dev/debug mode (live reload on change)
 
 (shortcut)
 ```bash
-# in the MeowNotes folder
+# In the MeowNotes folder
 make run-debug
 ```
 
@@ -69,7 +72,7 @@ python3 meownotes/__init__.py
 
 (shortcut)
 ```bash
-# in the MeowNotes folder
+# In the MeowNotes folder
 make run-prod
 ```
 
@@ -79,6 +82,13 @@ source venv/bin/activate
 # Start the app
 export FLASK_APP=meownotes/__init__.py
 flask run
+```
+
+Using the wsgi server:
+
+```bash
+# In the MeowNotes folder
+make run-wsgi
 ```
 
 See MeowNotes at [localhost:5000/](http://localhost:5000/)
