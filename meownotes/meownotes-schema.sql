@@ -1,3 +1,4 @@
+drop table if exists "notes";
 CREATE TABLE "notes" (
  "id" INTEGER UNIQUE,
  "uid" INTEGER NOT NULL,
@@ -8,6 +9,7 @@ CREATE TABLE "notes" (
  PRIMARY KEY("id")
 );
 
+drop table if exists "users";
 CREATE TABLE "users" (
  "uid" INTEGER UNIQUE,
  "username" TEXT UNIQUE,

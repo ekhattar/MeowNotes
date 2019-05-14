@@ -3,6 +3,9 @@ APP_ENTRY_POINT=__init__.py
 MEOWNOTES_PORT=8000
 MEOWNOTES_HOST="0.0.0.0"
 
+fresh-db:
+	export FLASK_APP=$(APP_DIR) && flask initdb
+
 run-debug:
 	echo ">>> INFO: starting MeowNotes with debug mode enabled on default port 5000"
 	export MEOWNOTES_DEBUG=True && python $(APP_DIR)/$(APP_ENTRY_POINT)

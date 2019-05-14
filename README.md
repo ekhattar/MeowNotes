@@ -35,6 +35,8 @@ pip3 install virtualenv
 
 ## Setup
 
+General setup
+
 ```bash
 # Clone the repo
 git clone https://github.com/ekhattar/MeowNotes.git
@@ -49,6 +51,16 @@ pip install flask
 pip install python-dateutil
 # Optional: install if want to run with wsgi server locally
 pip install uwsgi
+```
+
+(Re)create the database; __danger__, will delete existing contents and create new tables!
+
+```bash
+# Option 1: using make
+make fresh-db
+# Option 2: without using make
+export FLASK_APP=meownotes
+flask initdb
 ```
 
 ## Start MeowNotes locally
