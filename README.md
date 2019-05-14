@@ -51,6 +51,8 @@ pip install flask
 pip install python-dateutil
 # Optional: install if want to run with wsgi server locally
 pip install uwsgi
+# Dev dependency only for testing
+pip install pytest
 ```
 
 (Re)create the database; __danger__, will delete existing contents and create new tables!
@@ -117,6 +119,14 @@ Using the wsgi server:
 ```bash
 # In the MeowNotes folder
 make run-wsgi
+```
+
+### Test
+
+Tests are found in `meownotes/tests`; run with
+
+```bash
+pytest
 ```
 
 ## Features
