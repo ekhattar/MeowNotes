@@ -14,7 +14,7 @@ if ROOT not in sys.path:
 from dbquery import *
 from utils import *
 
-bp = Blueprint("meownotes", __name__)
+bp = Blueprint("pawprint", __name__)
 
 # Landing page - either shows login/sign-up or redirects to dashboard
 @bp.route("/")

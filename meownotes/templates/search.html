@@ -28,7 +28,7 @@
                 <div class="my-auto">
                     <p>want to limit your search to a certain field? use the filters below!</p>
                     <p style="font-style:italic">search term: {{ term }}</p>
-                    <form method="POST" action="/filter">
+                    <form method="POST" action="{{ url_for('pawprint.filter') }}">
                         <input type="checkbox" name="fields" value="title"> title
                         <input type="checkbox" name="fields" value="tags" class="ml-1"> tags
                         <input type="checkbox" name="fields" value="content" class="ml-1"> note content
@@ -65,13 +65,13 @@
                             <div class="col-6">
                                 <div class="meownotes-button meownotes-link my-auto">
                                     <span class="align-middle">
-                                        <a href="{{ url_for('meownotes.view', id=note['note_id']) }}"><i class="far fa-eye"></i>
+                                        <a href="{{ url_for('pawprint.view', id=note['note_id']) }}"><i class="far fa-eye"></i>
                                             view</a>
                                     </span>
                                 </div>
                             </div>
                             <div class="col-6">
-                                <form method="POST" action="/delete">
+                                <form method="POST" action="{{ url_for('pawprint.delete') }}">
                                     <input type="hidden" id="note_id" name="note_id" value="{{ note['note_id'] }}">
                                     <button
                                         class="meownotes-button meownotes-link btn btn-med btn-primary btn-block meownotes-bg-warning"

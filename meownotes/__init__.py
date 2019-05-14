@@ -25,7 +25,7 @@ def create_app():
 
     # Load the config
     app.config.from_object("config.Config")
-    from meowprint import bp
+    from pawprint import bp
     # Register the main meownotes blueprint
     app.register_blueprint(bp)
 

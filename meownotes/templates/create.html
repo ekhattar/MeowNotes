@@ -14,7 +14,7 @@
   {% block content %}
   <div class="content main">
     <div class="row h-100">
-      <form class="container" method="POST" action="/create">
+      <form class="container" method="POST" action="{{ url_for('pawprint.create') }}">
         <div class="row h-100">
           <div class="col-3 my-auto">
             <div class="note-metadata">
@@ -41,7 +41,7 @@
               <div class="col">
                 <div class="meownotes-button meownotes-link my-auto meownotes-bg-warning">
                   <span class="align-middle">
-                    <a href="/dashboard"><i class="fas fa-home"></i> return</a>
+                    <a action="{{ url_for('pawprint.dashboard') }}"><i class="fas fa-home"></i> return</a>
                   </span>
                 </div>
               </div>

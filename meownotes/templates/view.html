@@ -35,17 +35,17 @@
           </div>
           <div class="meownotes-button meownotes-link my-auto mb-1">
             <span class="align-middle">
-              <a href="{{ url_for('meownotes.download', id=data['note_id']) }}"><i class="fas fa-file-download"></i> download</a>
+              <a href="{{ url_for('pawprint.download', id=data['note_id']) }}"><i class="fas fa-file-download"></i> download</a>
             </span>
           </div>
-          <form method="POST" action="/delete" class="mb-1">
+          <form method="POST" action="{{ url_for('pawprint.delete') }}" class="mb-1">
             <input type="hidden" id="note_id" name="note_id" value="{{ data['note_id'] }}">
             <button class="meownotes-button meownotes-link btn btn-med btn-primary btn-block meownotes-bg-warning"
               type="submit"><i class="fas fa-trash"></i> delete</button>
           </form>
           <div class="meownotes-button meownotes-link my-auto">
             <span class="align-middle">
-              <a href="{{ url_for('meownotes.dashboard') }}"><i class="fas fa-home"></i> return</a>
+              <a href="{{ url_for('pawprint.dashboard') }}"><i class="fas fa-home"></i> return</a>
             </span>
           </div>
         </div>
@@ -59,7 +59,7 @@
           <h4 class="modal-title" id="edit-label">update note</h4>
         </div>
         <div class="modal-body">
-          <form role="form" method="POST" action="/update">
+          <form role="form" method="POST" action="{{ url_for('pawprint.update') }}">
             <input type="hidden" id="note_id" name="note_id" value="{{ data['note_id'] }}">
             <div class="form-group">
               <label for="title" class="control-label">title</label>
