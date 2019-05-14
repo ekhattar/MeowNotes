@@ -174,12 +174,14 @@ def search():
             db_search_results = get_search_notes(uid, input_term)
             note_data = process_note_results(db_search_results)
             num_results = len(note_data)
-            return render_template("search.html", menu_item="logout", data=note_data, num=num_results, term=input_term)
+            # default filters
+            def_filters = ["title", "tags", "content"]
+            return render_template("search.html", menu_item="logout", data=note_data, num=num_results, term=input_term, filters=def_filters)
         # show empty search page
         else:
             # clear the search term last stored
             session.pop("search", None)
-            return render_template("search.html", menu_item="logout", data={}, num=0, term="(none, please use the search)")
+            return render_template("search.html", menu_item="logout", data={}, num=0, term="(none, please use the search in the menu)")
     return redirect("/")
 
 # Filters last search result by whatever was checked (done from search page)
@@ -196,7 +198,8 @@ def filter():
                 db_search_results = get_search_notes(uid, last_search, input_fields)
                 note_data = process_note_results(db_search_results)
                 num_results = len(note_data)
-                return render_template("search.html", menu_item="logout", data=note_data, num=num_results, term=last_search)
+                # show the checked fields
+                return render_template("search.html", menu_item="logout", data=note_data, num=num_results, term=last_search, filters=input_fields)
             else:
                 return redirect("/search")
         else:

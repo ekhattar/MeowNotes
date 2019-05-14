@@ -29,9 +29,9 @@
                     <p>want to limit your search to a certain field? use the filters below!</p>
                     <p style="font-style:italic">search term: {{ term }}</p>
                     <form method="POST" action="{{ url_for('pawprint.filter') }}">
-                        <input type="checkbox" name="fields" value="title"> title
-                        <input type="checkbox" name="fields" value="tags" class="ml-1"> tags
-                        <input type="checkbox" name="fields" value="content" class="ml-1"> note content
+                        <input type="checkbox" name="fields" value="title" {% if 'title' in filters %}checked{% endif %}> title
+                        <input type="checkbox" name="fields" value="tags" class="ml-1" {% if 'tags' in filters %}checked{% endif %}> tags
+                        <input type="checkbox" name="fields" value="content" class="ml-1" {% if 'content' in filters %}checked{% endif %}> note content
                         <button class="meownotes-button btn btn-med btn-primary btn-block mt-1" type="submit"><i
                                 class="fas fa-filter"></i>
                         </button>
