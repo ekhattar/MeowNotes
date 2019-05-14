@@ -93,7 +93,11 @@ def view():
     if g.uid:
         uid = g.uid
         # get the note id from the query string param
-        requested_note_id = request.args.get("id")
+        if request.args.get("id"):
+            # requested_note_id = request.args.get("id")
+            session["last_note_id"] = request.args.get("id")
+        # if the request didn't include a note id, check the last one
+        requested_note_id = session.get("last_note_id")
         # retrieve note from the database
         db_note_results = get_note_by_id(uid, requested_note_id)
         note_data = process_note_results(db_note_results)
@@ -128,7 +132,7 @@ def update():
         input_tags = request.form["tags"]
         input_content = request.form["content"]
         update_note(uid, note_id, input_title, input_tags, input_content)
-    return redirect("/dashboard")
+    return redirect("/view")
 
 # Create new note (can be done from the dashboard)
 @bp.route("/create", methods=("GET", "POST"))
