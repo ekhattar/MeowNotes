@@ -86,15 +86,15 @@ DELETE_ALL = "DELETE FROM TABLE"
 DELETE_CONDITIONAL = "DELETE from TABLE WHERE CONDITIONS" # e.g., DELETE from users WHERE username='kroshka' AND uid=1
 UPDATE_CONDITIONAL = "UPDATE TABLE SET PARAMETERS WHERE CONDITIONS" # e.g., UPDATE table SET column1 = value1, column2 = value2, ... WHERE condition;
 
-"""
-Forms the proper query using the given template and replacement values
-Expected form of query_input_items is:
-[{"val": "", "cols": [], "type": None, "condition": False}]
-Example use:
-prepare_query("GET_CONDITIONAL", "users", [{"val": "kroshka", "cols": ["username"], "type": "exact", "condition": True}, 
-                                           {"val": 1, "cols": ["uid"], "type": "exact", "condition": True}])
-"""
 def prepare_query(template, table, query_input_items = []):
+    """
+    Forms the proper query using the given template and replacement values
+    Expected form of query_input_items is:
+    [{"val": "", "cols": [], "type": None, "condition": False}]
+    Example use:
+    prepare_query("GET_CONDITIONAL", "users", [{"val": "kroshka", "cols": ["username"], "type": "exact", "condition": True}, 
+                                            {"val": 1, "cols": ["uid"], "type": "exact", "condition": True}])
+    """
     # get the desired SQl string template
     query = eval(template)
     # replace with the desired table
@@ -136,11 +136,11 @@ def prepare_query(template, table, query_input_items = []):
 
 ############ MeowNotes-specific functions for DB interaction ############
 
-"""
-Retrieve all entries from a given table
-if UID is given, will limit to that user
-"""
 def get_all(table, uid = None):
+    """
+    Retrieve all entries from a given table
+    if UID is given, will limit to that user
+    """
     if uid is None:
         query = prepare_query("GET_ALL", table)
         results = execute_select(query)
@@ -150,11 +150,11 @@ def get_all(table, uid = None):
         results = execute_select(query)
     return results
 
-"""
-Deletes all entries from a given table
-if UID is given, will limit to that user
-"""
 def delete_all(table, uid = None):
+    """
+    Deletes all entries from a given table
+    if UID is given, will limit to that user
+    """
     if uid is None:
         query = prepare_query("DELETE_ALL", table)
     else:
@@ -200,11 +200,11 @@ def delete_user_by_id(uid):
         print(msg)
     return msg
 
-"""
-Create a new user if that username is not taken
-Example use: create_user("kroshka", "love")
-"""
 def create_user(username, password):
+    """
+    Create a new user if that username is not taken
+    Example use: create_user("kroshka", "love")
+    """
     # make username lowercase
     username = username.lower()
     # prepare the query
@@ -249,11 +249,11 @@ def delete_note_by_id(uid, note_id):
         print(msg)
     return msg
 
-"""
-Create a new note given a title, tags, and content
-Example use: create_note(1, "Test Title", "uni,se", "Content of the note about uni")
-"""
 def create_note(uid, title, tags, content):
+    """
+    Create a new note given a title, tags, and content
+    Example use: create_note(1, "Test Title", "uni,se", "Content of the note about uni")
+    """
     timestamp = datetime.datetime.now().isoformat()
     # check if the tags are an array, if yes make them a comma-separated string
     tags = fix_tags(tags)
@@ -272,11 +272,11 @@ def create_note(uid, title, tags, content):
         print(msg)
     return msg
 
-"""
-Update an existing note by the uid and note id
-Example use: update_note(1,1, "New note title", "", "This is a note with content")
-"""
 def update_note(uid, note_id, title, tags, content):
+    """
+    Update an existing note by the uid and note id
+    Example use: update_note(1,1, "New note title", "", "This is a note with content")
+    """
     # check if the tags are an array, if yes make them a comma-separated string
     tags = fix_tags(tags)
     query_input_items = []
@@ -294,13 +294,13 @@ def update_note(uid, note_id, title, tags, content):
         print(msg)
     return msg
 
-"""
-Retrieve all notes for the current user that match the search
-searches the "title", "tags", and "content" columns
-returns a list of notes
-Example output: [(1, 1, '2019-05-05T16:15:14.429235', 'My First Note', 'uni', 'This is the text of the note.')]
-"""
 def get_search_notes(uid, search_string, search_fields = None):
+    """
+    Retrieve all notes for the current user that match the search
+    searches the "title", "tags", and "content" columns
+    returns a list of notes
+    Example output: [(1, 1, '2019-05-05T16:15:14.429235', 'My First Note', 'uni', 'This is the text of the note.')]
+    """
     # search for matches in the TITLE for this user
     title_query = prepare_query("GET_CONDITIONAL", "notes", [{"val": uid, "cols": ["uid"], "type": "exact", "condition": True},
         {"val": search_string, "cols": ["title"], "type": "contains", "condition": True}])
