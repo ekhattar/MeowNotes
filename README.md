@@ -14,7 +14,7 @@ The live version of MeowNotes is deployed and hosted from [pythonanywhere](http:
 
 For local development, the [make](https://www.gnu.org/software/make/) utility provides an easy way to setup MeowNotes with predefined commands and testing is done with [pytest](https://docs.pytest.org/en/latest/).
 
-MeowNotes makes use of the following: [Bootstrap](https://getbootstrap.com/docs/4.3/getting-started/introduction/), [Font Awesome](https://fontawesome.com/), [Google Fonts](https://fonts.google.com/), and [Cat as a Service](https://cataas.com/#/).
+MeowNotes makes use of the following: [Bootstrap](https://getbootstrap.com/docs/4.3/getting-started/introduction/), [Font Awesome](https://fontawesome.com/), and [Cat as a Service](https://cataas.com/#/).
 
 
 __Structure of this repo__
