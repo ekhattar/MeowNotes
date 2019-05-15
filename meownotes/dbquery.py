@@ -28,9 +28,14 @@ if DEBUG:
 # DB connection created using help of tutorial from flask
 # http://flask.pocoo.org/docs/1.0/tutorial/database/
 
+# START section based on tutorial
+
 def get_db():
-    print(current_app.config["DATABASE"])
+    if DEBUG:
+        print(">>> INFO: MeowNotes database configured is: %s" % current_app.config["DATABASE"])
+    # db not already loaded in the "global" app context g
     if "db" not in g:
+        # start the connection to the db using the db file configured
         g.db = sqlite3.connect(
             current_app.config["DATABASE"],
             detect_types=sqlite3.PARSE_DECLTYPES
@@ -39,12 +44,16 @@ def get_db():
     return g.db
 
 def close_db(e=None):
+    # remove db from the "global" app context g
     db = g.pop("db", None)
     if db is not None:
+        # close the db connection
         db.close()
 
 def init_db():
     db = get_db()
+    # based on the defined schema drop existing tables and recreate
+    # DANGER: this deletes existing data!
     with current_app.open_resource("meownotes-schema.sql") as f:
         db.executescript(f.read().decode("utf8"))
 
@@ -53,14 +62,15 @@ def init_db():
 @click.command("initdb")
 @with_appcontext
 def init_db_command():
-    # clear existing data
-    # create new tables according to the schema
+    # call the (re)create db
     init_db()
-    click.echo("Initialized the MeowNotes database.")
+    click.echo(">>> INFO: (Re)initialized the MeowNotes database.")
 
 def init_app(app):
     app.teardown_appcontext(close_db)
     app.cli.add_command(init_db_command)
+
+# END section based on tutorial
 
 ############ Functions to interact with the MeowNotes SQLite database ############
 
