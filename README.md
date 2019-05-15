@@ -51,6 +51,20 @@ General setup
 git clone https://github.com/ekhattar/MeowNotes.git
 # Change directory
 cd MeowNotes
+```
+
+After this point, you have two options.
+
+You can setup the environment for MeowNotes using `make` if you have it:
+
+```bash
+# in the MeowNotes dir
+make install
+```
+
+You can also do everything without `make`:
+
+```bash
 # Create the virtual env
 python3 -m venv venv
 # Start the virtual env
@@ -176,6 +190,9 @@ pytest
 #### View a random cat
 ![random cat](documentation/screenshots/random-cat.png)
 
+#### Search for notes and filter search
+![search](documentation/screenshots/search-view.png)
+
 ### Routes
 
 - `/`
@@ -194,7 +211,7 @@ pytest
 - `/download`
     - `GET` note data sent as raw text file to download
 - `/update`
-    - `GET` redirect to the dashboard
+    - `GET` redirect to the `/view` page for this note
     - `POST` (DB) update the note with the given id from the form
 - `/create`
     - `GET` show the create page
@@ -203,11 +220,11 @@ pytest
     - `GET` redirect to dashboard
     - `POST` (DB) delete the note with the given id from the form
 - `/search`
-    - GET: show empty search results page
-    - POST: show populated search results
+    - `GET` show empty search results page
+    - `POST` show populated search results
 - `/filter`
-    - GET: redirect to (empty) search results page
-    - POST: render search results with filters applied
+    - `GET` redirect to (empty) search results page
+    - `POST` render search results with filters applied
 
 _Note_: all `GET` requests additionally to the above redirect to the landing (login page) if the user is not logged in
 
