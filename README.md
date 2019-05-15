@@ -8,17 +8,26 @@ See live at: http://ekhattar.pythonanywhere.com/
 
 MeowNotes is a Python-based web app written with [Flask](http://flask.pocoo.org/) and an [SQLite](https://www.sqlite.org/index.html) database.
 
-Additionally, MeowNotes makes use of the following: [Bootstrap](https://getbootstrap.com/docs/4.3/getting-started/introduction/), [Font Awesome](https://fontawesome.com/), [Google Fonts](https://fonts.google.com/), and [Cat as a Service](https://cataas.com/#/).
+It can be run on the [uWSGI](https://uwsgi-docs.readthedocs.io/en/latest/) server that implements the [WSGI python server specification](https://en.wikipedia.org/wiki/Web_Server_Gateway_Interface).
 
-Structure of this repo:
+The live version of MeowNotes is deployed and hosted from [pythonanywhere](http://pythonanywhere.com).
 
-```bash
-|--documentation    basic documentation
+For local development, the [make](https://www.gnu.org/software/make/) utility provides an easy way to setup MeowNotes with predefined commands and testing is done with [pytest](https://docs.pytest.org/en/latest/).
+
+MeowNotes makes use of the following: [Bootstrap](https://getbootstrap.com/docs/4.3/getting-started/introduction/), [Font Awesome](https://fontawesome.com/), [Google Fonts](https://fonts.google.com/), and [Cat as a Service](https://cataas.com/#/).
+
+
+__Structure of this repo__
+
+```
+|--documentation    first concept and images used in this readme
 |--meownotes        main source code directory including SQLite db
 |----static         assets for the flask app
 |------css          custom & bootstrap css files
+|------fonts        font files (Montserrat)
 |------img          image assets for MeowNotes
 |------js           custom & bootstrap + dependencies js files
+|----test           testing
 |----templates      html templates for the flask app
 ```
 
@@ -31,7 +40,7 @@ Structure of this repo:
 pip3 install virtualenv
 ```
 - recommended: [make](https://www.gnu.org/software/make/)
-  - needed only if want to use the `Makefile` commands as shortcuts
+  - needed only if want to use the tasks defined in the `Makefile` as shortcuts
 
 ## Setup
 
@@ -97,6 +106,8 @@ This mode suppresses the additional logging output and starts on a different por
 
 See MeowNotes at [localhost:8000/](http://localhost:8000/).
 
+This port is defined in the `Makefile` and can be changed there.
+
 Start with `make`:
 
 ```bash
@@ -114,18 +125,19 @@ export FLASK_APP=meownotes/__init__.py
 flask run
 ```
 
-Using the wsgi server:
+Using the uWSGI server:
 
 ```bash
 # In the MeowNotes folder
 make run-wsgi
 ```
 
-### Test
+### Testing
 
-Tests are found in `meownotes/tests`; run with
+Tests are found in `meownotes/tests`; run like so:
 
 ```bash
+# in the root folder MeowNotes
 pytest
 ```
 
@@ -199,3 +211,9 @@ pytest
 
 _Note_: all `GET` requests additionally to the above redirect to the landing (login page) if the user is not logged in
 
+## References
+
+- Flask documentation
+  - database connection: http://flask.pocoo.org/docs/1.0/tutorial/database/
+  - blueprints: http://flask.pocoo.org/docs/1.0/tutorial/views/
+  - testing: http://flask.pocoo.org/docs/1.0/testing/

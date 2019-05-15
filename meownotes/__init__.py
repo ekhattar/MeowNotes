@@ -1,7 +1,5 @@
 #!/usr/bin/env python3
-from flask import Flask, request, redirect, render_template, session, flash, send_from_directory, url_for, send_file, Response, g, Blueprint
-from werkzeug.security import check_password_hash, generate_password_hash
-import random
+from flask import Flask, g, Blueprint
 import os
 import sys
 

@@ -19,7 +19,10 @@ meownotes = create_app()
 TEST_USER = "kroshka"
 TEST_PASSWORD = "test"
 
-# fixture is called by the tests
+# a fixture is called by the tests when running
+# created using the flask documentation http://flask.pocoo.org/docs/1.0/testing/
+
+# START section based on documentation
 @pytest.fixture
 def client():
     db_fd, meownotes.config["DATABASE"] = tempfile.mkstemp()
@@ -30,6 +33,8 @@ def client():
     yield client
     os.close(db_fd)
     os.unlink(meownotes.config["DATABASE"])
+
+# END section based on documentation
 
 def login(client, username, password):
     return client.post("/login", data=dict(
