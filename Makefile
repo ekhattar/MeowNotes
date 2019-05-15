@@ -38,6 +38,11 @@ run-wsgi:
 	export MEOWNOTES_LOCALDEV=True && \
 	uwsgi --socket $(MEOWNOTES_HOST):$(MEOWNOTES_PORT) --protocol=http -w wsgi:application
 
+see-routes:
+	source $(VENV_DIR)/bin/activate && \
+	export FLASK_APP=$(APP_DIR) && \
+	flask routes
+
 test:
 	source $(VENV_DIR)/bin/activate && \
 	pytest

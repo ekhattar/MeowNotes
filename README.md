@@ -84,6 +84,8 @@ pip install pytest
 # Option 1: using make
 make fresh-db
 # Option 2: without using make
+# Start the virtual env
+source venv/bin/activate
 export FLASK_APP=meownotes
 flask initdb
 ```
@@ -135,7 +137,7 @@ Start manually:
 # Start the virtual env
 source venv/bin/activate
 # Start the app
-export FLASK_APP=meownotes/__init__.py
+export FLASK_APP=meownotes
 flask run
 ```
 
@@ -194,6 +196,14 @@ pytest
 ![search](documentation/screenshots/search-view.png)
 
 ### Routes
+
+You can use `make` to see the routes defined:
+
+```bash
+make see-routes
+```
+
+Here is a more detailed description:
 
 - `/`
     - `GET` show the langing (login/sign-up page)
