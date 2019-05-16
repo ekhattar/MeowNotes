@@ -14,7 +14,9 @@ It can be run on the [uWSGI](https://uwsgi-docs.readthedocs.io/en/latest/) serve
 
 The live version of MeowNotes is deployed and hosted from [pythonanywhere](http://pythonanywhere.com).
 
-For local development, the [make](https://www.gnu.org/software/make/) utility provides an easy way to setup MeowNotes with predefined commands and testing is done with [pytest](https://docs.pytest.org/en/latest/).
+For local development, the [make](https://www.gnu.org/software/make/) utility provides an easy way to setup MeowNotes with predefined commands.
+
+With regards to quality, testing is done with [pytest](https://docs.pytest.org/en/latest/) and [pylint](https://www.pylint.org/) is used for static code checks.
 
 MeowNotes makes use of the following: [Bootstrap](https://getbootstrap.com/docs/4.3/getting-started/introduction/), [Font Awesome](https://fontawesome.com/), and [Cat as a Service](https://cataas.com/#/).
 
