@@ -3,15 +3,12 @@ import os
 import sys
 import tempfile
 import pytest
-
 ROOT = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
-
 # add the project directory to the sys.path
 if ROOT not in sys.path:
     sys.path = [ROOT] + sys.path
-
-from __init__ import *
-from dbquery import *
+from __init__ import create_app
+from dbquery import init_db
 
 meownotes = create_app()
 
@@ -25,6 +22,9 @@ TEST_PASSWORD = "test"
 # START section based on documentation
 @pytest.fixture
 def client():
+    """
+    Used for all tests; sets up test db
+    """
     db_fd, meownotes.config["DATABASE"] = tempfile.mkstemp()
     meownotes.config["TESTING"] = True
     client = meownotes.test_client()
@@ -37,24 +37,37 @@ def client():
 # END section based on documentation
 
 def login(client, username, password):
+    """Login"""
     return client.post("/login", data=dict(
         username=username,
         password=password
     ), follow_redirects=True)
 
 def logout(client):
+    """Logout"""
     return client.get("/logout", follow_redirects=True)
 
 def cat(client):
+    """See a cat"""
     return client.get("/cat", follow_redirects=True)
 
 def search(client, search_term):
+    """Search"""
     return client.post("/search", data=dict(
         search=search_term
     ), follow_redirects=True)
 
 def dashboard(client):
+    """Go to the dashboard"""
     return client.get("/dashboard", follow_redirects=True)
+
+def create_note(client, title, tags, content):
+    """Create a note"""
+    return client.post("/create", data=dict(
+        title=title,
+        tags=tags,
+        content=content
+    ), follow_redirects=True)
 
 def test_login_logout(client):
     """
@@ -109,3 +122,12 @@ def test_search_page(client):
     rv = login(client, TEST_USER, TEST_PASSWORD)
     rv = search(client, "Note")
     assert b"results" in rv.data
+
+def test_create_note(client):
+    """
+    User should create a note
+    """
+    login(client, TEST_USER, TEST_PASSWORD)
+    rv = create_note(client, "Note 1", "test", "Contents of the note")
+    # dashboard page should be shown
+    assert b"dashboard" in rv.data
