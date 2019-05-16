@@ -60,6 +60,7 @@ __Structure of this repo__
 │   └── utils.py                                                additional helper functions for MeowNotes
 ├── venv                                                        (virtual environment, not committed to repo)
 │   └── ...
+├── .pylintrc                                                   config file for pylint
 └── wsgi.py                                                     uWSGI server configuration file
 
 ```
@@ -109,6 +110,7 @@ pip install python-dateutil
 pip install uwsgi
 # Dev dependency only for testing
 pip install pytest
+pip install pylint
 ```
 
 (Re)create the database; __danger__, will delete existing contents and create new tables!
@@ -187,7 +189,14 @@ Tests are found in `meownotes/tests`; run like so:
 
 ```bash
 # in the root folder MeowNotes
-pytest
+make test
+```
+
+To use `pylint` (configured in the `.pylintrc` file):
+
+```bash
+# in the root folder MeowNotes
+make lint
 ```
 
 ## Features

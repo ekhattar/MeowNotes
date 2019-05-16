@@ -11,7 +11,8 @@ install:
 	pip install flask && \
 	pip install python-dateutil && \
 	pip install uwsgi && \
-	pip install pytest
+	pip install pytest && \
+	pip install pylint
 
 fresh-db:
 	echo ">>> INFO: (re)creating MeowNotes database"
@@ -46,3 +47,7 @@ see-routes:
 test:
 	source $(VENV_DIR)/bin/activate && \
 	pytest
+
+lint:
+	source $(VENV_DIR)/bin/activate && \
+	pylint $(APP_DIR)
