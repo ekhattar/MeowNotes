@@ -20,15 +20,48 @@ MeowNotes makes use of the following: [Bootstrap](https://getbootstrap.com/docs/
 __Structure of this repo__
 
 ```
-|--documentation    first concept and images used in this readme
-|--meownotes        main source code directory including SQLite db
-|----static         assets for the flask app
-|------css          custom & bootstrap css files
-|------fonts        font files (Montserrat)
-|------img          image assets for MeowNotes
-|------js           custom & bootstrap + dependencies js files
-|----test           testing
-|----templates      html templates for the flask app
+.
+├── Makefile                                                    "shortcut" tasks to setup and run MeowNotes
+├── README.md                                                   primary info on how to setup, run, etc
+├── documentation
+│   ├── "SS2019 - SE 01 Final Project - Concept.pdf"            first concept ideation for the project
+│   ├── diagrams                                                technical diagrams of MeowNotes
+│   │   └── ...
+│   ├── flask-routes.png                                        screenshot of flask routes output
+│   └── screenshots                                             screenshots of MeowNotes pages
+│       └── ...
+├── meownotes                                                   main app directory
+│   ├── __init__.py                                             main Flask app file
+│   ├── config.py                                               app configuration
+│   ├── dbquery.py                                              main backend file to communicate with db
+│   ├── meownotes-schema.sql                                    schema showing structure of MeowNotes db
+│   ├── meownotes.db                                            SQLite3 db
+│   ├── pawprint.py                                             Flask blueprint for MeowNotes app
+│   ├── static                                                  static files
+│   │   ├── css                                                 styling
+│   │   │   ├── bootstrap-4.3.1                                 Bootstrap CSS
+│   │   │   │   └── ...
+│   │   │   ├── fonts.css                                       custom font imports
+│   │   │   └── main.css                                        MeowNotes custom css
+│   │   ├── fonts                                               custom font (Montserrat) files
+│   │   │   └── ...
+│   │   ├── img                                                 MeowNotes image assets (logo, favicon)
+│   │   │   └── ...
+│   │   └── js                                                  js
+│   │       ├── bootstrap-4.3.1                                 Bootstrap JS
+│   │       │   └── ...
+│   │       ├── jquery-3.3.1.slim.min.js                        Bootstrap JS dependency
+│   │       ├── main.js                                         MeowNotes custom js
+│   │       └── popper.min.js                                   Bootstrap JS dependency
+│   ├── templates                                               MeowNotes HTML templates
+│   │   └── ...
+│   ├── test                                                    test folder
+│   │   └── ...
+│   └── utils.py                                                additional helper functions for MeowNotes
+├── venv                                                        (virtual environment, not committed to repo)
+│   └── ...
+└── wsgi.py                                                     uWSGI server configuration file
+
 ```
 
 ## Prerequisites
