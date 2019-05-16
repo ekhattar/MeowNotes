@@ -183,7 +183,7 @@ Using the uWSGI server:
 make run-wsgi
 ```
 
-### Testing
+### Testing and code quality
 
 Tests are found in `meownotes/tests`; run like so:
 
