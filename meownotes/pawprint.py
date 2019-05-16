@@ -11,7 +11,9 @@ ROOT = os.path.dirname(os.path.realpath(__file__))
 # add the project directory to the sys.path
 if ROOT not in sys.path:
     sys.path = [ROOT] + sys.path
-from dbquery import *
+from dbquery import get_user_by_name, get_id_by_user, parse_user, create_user, \
+    get_note_by_id, get_notes_by_user, get_search_notes, process_note_results, \
+    update_note, delete_note_by_id, create_note
 from utils import create_welcome_message, reformat_for_export
 
 MEOW_BP = Blueprint("pawprint", __name__)
@@ -54,7 +56,7 @@ def login():
         # check the db for existing users with the input username
         db_res = get_user_by_name(input_username)
         # if the user already exists, if the password is right then user logs in
-        if (len(db_res) == 1):
+        if len(db_res) == 1:
             db_user = parse_user(db_res[0])
             # if the password is right then user logs in
             if check_password_hash(db_user["password"], input_password):
