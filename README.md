@@ -2,7 +2,9 @@
 
 The note-taking app for cat lovers.
 
-See live at: http://ekhattar.pythonanywhere.com/
+See MeowNotes live at: http://ekhattar.pythonanywhere.com/
+
+For more details, [see the technical paper in the wiki](https://github.com/ekhattar/MeowNotes/wiki/Technical-Paper).
 
 ## About
 
