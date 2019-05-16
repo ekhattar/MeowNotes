@@ -1,3 +1,6 @@
+
+<img src="https://github.com/ekhattar/MeowNotes/blob/master/meownotes/static/img/logo.png" alt="MeowNotes" width="100px" height="100px">
+
 # MeowNotes
 
 The note-taking app for cat lovers.
