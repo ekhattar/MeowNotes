@@ -1,3 +1,8 @@
+
+<img src="https://github.com/ekhattar/MeowNotes/blob/master/meownotes/static/img/logo.png" alt="MeowNotes" width="100px" height="100px">
+
+[![made-with-python](https://img.shields.io/badge/Made%20with-Python-1f425f.svg)](https://www.python.org/)
+
 # MeowNotes
 
 The note-taking app for cat lovers.
