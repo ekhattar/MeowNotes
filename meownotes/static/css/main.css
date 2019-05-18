@@ -12,6 +12,22 @@ h1 {
     font-weight: 500;
 }
 
+.meownotes-errors {
+    color: var(--meownotes-red) !important;
+}
+
+.meownotes-errors:hover {
+    color: var(--meownotes-light) !important;
+}
+
+.meownotes-info {
+    color: var(--meownotes-yellow) !important;
+}
+
+.meownotes-info:hover {
+    color: var(--meownotes-light) !important;
+}
+
 /* main MeowNotes colors */
 :root {
     --meownotes-blue: #30D1E8;
@@ -38,12 +54,26 @@ h1 {
     margin-right: 1rem !important;
 }
 
+.mr-mini {
+    margin-right: 0.5rem !important;
+}
+
 .meownotes-bg-warning:hover {
-    background-color: #EA526F !important;
+    background-color: var(--meownotes-red)!important;
+    color: var(--meownotes-light) !important;
+}
+
+.meownotes-bg-warning:hover a, .meownotes-bg-warning:hover i {
+    color: var(--meownotes-light) !important;
 }
 
 .meownotes-go-accent:hover {
-    background-color: #FFB20F !important;
+    background-color: var(--meownotes-yellow) !important;
+    color: var(--meownotes-light) !important;
+}
+
+.meownotes-go-accent:hover a, .meownotes-go-accent:hover i {
+    color: var(--meownotes-light) !important;
 }
 
 /* -------------- navbar area styling -------------- */
@@ -138,15 +168,15 @@ h1 {
 }
 
 .dashboard-note-prompt {
-    background-color: #ffffff;
-    border: 1px dashed #30D1E8;
-    color: #30D1E8;
+    background-color: var(--meownotes-light);
+    border: 1px dashed var(--meownotes-blue);
+    color: var(--meownotes-blue);
 }
 
 .dashboard-note {
-    background-color: #30D1E8;
-    border: 1px solid #30D1E8;
-    color: #ffffff;
+    background-color: var(--meownotes-blue);
+    border: 1px solid var(--meownotes-blue);
+    color: var(--meownotes-light);
 }
 
 /* -------------- single notes view styling -------------- */

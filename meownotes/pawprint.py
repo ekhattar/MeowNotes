@@ -5,7 +5,7 @@ Main Blueprint for the MeowNotes Flask app
 import random
 import os
 import sys
-from flask import request, redirect, render_template, session, Response, g, Blueprint
+from flask import request, redirect, render_template, session, Response, g, Blueprint, flash
 from werkzeug.security import check_password_hash, generate_password_hash
 ROOT = os.path.dirname(os.path.realpath(__file__))
 # add the project directory to the sys.path
@@ -33,10 +33,17 @@ def cat():
     """
     Page that shows a random cat :)
     """
+    # clear any notifications if there were any
+    session.pop("_flashes", None)
     # append a random number to the end of the cat image url
     # to prevent caching (otherwise same photo always shown)
     cat_url = "https://cataas.com/cat" + "?" + str(random.randint(1, 101))
-    return render_template("/cat.html", cat=cat_url)
+    # based on the current user status, need to show login or logout in the menu
+    if g.uid:
+        menu_item = "logout"
+    else:
+        menu_item = "login"
+    return render_template("/cat.html", cat=cat_url, menu_item=menu_item)
 
 @MEOW_BP.route("/login", methods=("GET", "POST"))
 def login():
@@ -62,11 +69,13 @@ def login():
             if check_password_hash(db_user["password"], input_password):
                 # store the current user for the session
                 session["username"] = input_username.lower()
+                # clear any notifications if there were any
+                session.pop("_flashes", None)
                 return redirect("/dashboard")
             # if the password is wrong, prompt to try again
             else:
-                msg = "The password was wrong for the existing user. \
-                      To make a new account, please enter a different username."
+                msg = "To make a new account, please enter a different username."
+                flash("wrong password", "error")
                 return render_template("landing.html", msg=msg)
         else:
             # create the new user
@@ -97,6 +106,7 @@ def logout():
     Log out button in menu - handles logout then redirects to landing page
     """
     session.pop("username", None)
+    session.pop("_flashes", None)
     session.clear()
     return redirect("/")
 
@@ -116,6 +126,11 @@ def view():
         # retrieve note from the database
         db_note_results = get_note_by_id(uid, requested_note_id)
         note_data = process_note_results(db_note_results)
+        # if the list is empty, redirect!
+        if not note_data:
+            # add warning in the menu bar
+            flash("note not found", "error")
+            return redirect("/dashboard")
         return render_template("view.html", menu_item="logout", data=note_data[0])
     return redirect("/")
 
@@ -151,6 +166,8 @@ def update():
         input_tags = request.form["tags"]
         input_content = request.form["content"]
         update_note(uid, note_id, input_title, input_tags, input_content)
+        # add notification in the menu bar
+        flash("note updated", "info")
     return redirect("/view")
 
 @MEOW_BP.route("/create", methods=("GET", "POST"))
@@ -170,6 +187,8 @@ def create():
             input_tags = request.form["tags"]
             input_content = request.form["content"]
             create_note(uid, input_title, input_tags, input_content)
+            # add notification in the menu bar
+            flash("note created", "info")
             return redirect("/dashboard")
     return redirect("/")
 
@@ -185,6 +204,7 @@ def delete():
         requested_note_id = request.form["note_id"]
         # delete note from the database
         delete_note_by_id(uid, requested_note_id)
+        flash("note deleted", "error")
     return redirect("/dashboard")
 
 @MEOW_BP.route("/search", methods=("GET", "POST"))
@@ -252,6 +272,15 @@ def filter_search():
         else:
             return redirect("/search")
     return redirect("/")
+
+@MEOW_BP.route("/clear")
+def clear_messages():
+    """
+    Clears any active messages
+    from flask flash then redirects back
+    """
+    session.pop("_flashes", None)
+    return redirect(request.referrer)
 
 @MEOW_BP.before_app_request
 def check_user_logged_in():
