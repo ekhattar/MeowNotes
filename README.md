@@ -240,6 +240,9 @@ make lint
 #### Downloaded note
 ![download(ed) note](documentation/screenshots/downloaded-file.png)
 
+#### Deleted note and example notification
+![delete note](documentation/screenshots/example-notification.png)
+
 #### View a random cat
 ![random cat](documentation/screenshots/random-cat.png)
 
