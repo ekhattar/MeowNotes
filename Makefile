@@ -16,7 +16,7 @@ install:
 
 fresh-db:
 	echo ">>> INFO: (re)creating MeowNotes database"
-	source $(VENV_DIR)/bin/activate && \
+	. $(VENV_DIR)/bin/activate && \
 	export FLASK_APP=$(APP_DIR) && \
 	flask initdb
 
