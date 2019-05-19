@@ -9,7 +9,7 @@ The note-taking app for cat lovers.
 
 See MeowNotes live at: http://ekhattar.pythonanywhere.com/
 
-For more details, [see the technical paper in the wiki](https://github.com/ekhattar/MeowNotes/wiki/Technical-Paper).
+For more details, [see the technical paper in the wiki](https://github.com/ekhattar/MeowNotes/wiki/Technical-Paper) and the [video](https://youtu.be/8sw9wcyz_4o).
 
 ## About
 
@@ -298,3 +298,4 @@ _Note_: all `GET` requests additionally to the above redirect to the landing (lo
   - database connection: http://flask.pocoo.org/docs/1.0/tutorial/database/
   - blueprints: http://flask.pocoo.org/docs/1.0/tutorial/views/
   - testing: http://flask.pocoo.org/docs/1.0/testing/
+  - flashing: http://flask.pocoo.org/docs/1.0/patterns/flashing/
